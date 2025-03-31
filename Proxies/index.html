@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proxies - 404 Games</title>
+    <link id="favicon" rel="icon" type="image/png" href="../favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Poppins:wght@400;500&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background 0.3s ease, color 0.3s ease, border 0.3s ease;
+        }
+
+        body, html {
+            height: 100%;
+            width: 100%;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(60deg, #1a1a1a, #2c2c2c, #1a1a1a);
+            background-size: 300% 300%;
+            animation: gradientSwoosh 12s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #c0c0c0;
+            overflow: hidden;
+        }
+
+        @keyframes gradientSwoosh {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            object-fit: cover;
+            filter: brightness(0.5);
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            z-index: 3;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #555 #333;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: #333;
+            border-radius: 10px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 10px;
+        }
+
+        .sidebar h2 {
+            font-size: 1.5rem;
+            color: #a0a0a0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .tab-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab-buttons button {
+            background: linear-gradient(135deg, #333, #555);
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .tab-buttons button:hover, .tab-buttons button.active {
+            background: linear-gradient(135deg, #555, #777);
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .tab-content select, .tab-content input {
+            background: rgba(50, 50, 50, 0.8);
+            border: none;
+            color: white;
+            padding: 8px;
+            font-size: 1rem;
+            border-radius: 8px;
+            width: 100%;
+            margin-bottom: 15px;
+            outline: none;
+        }
+
+        .tab-content .mode-buttons, .tab-content .panic-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .content {
+            margin-left: 250px;
+            flex: 1;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            max-height: 100vh;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #555 #333;
+            text-align: center;
+        }
+
+        .content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .content::-webkit-scrollbar-track {
+            background: #333;
+            border-radius: 10px;
+        }
+
+        .content::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 10px;
+        }
+
+        h1 { font-size: 2rem; color: #a0a0a0; margin-bottom: 15px; font-weight: bold; }
+        h2 { font-size: 1.2rem; color: #b0b0b0; margin-bottom: 15px; line-height: 1.5; }
+        h3 { font-size: 1rem; color: #a0a0a0; margin-bottom: 15px; }
+        h3 a { color: #3e5a78; text-decoration: none; transition: color 0.3s ease; }
+        h3 a:hover { color: #ffffff; }
+        h4 { font-size: 0.9rem; color: #a0a0a0; margin-bottom: 15px; }
+        p { font-size: 0.9rem; margin-bottom: 15px; opacity: 0.9; }
+
+        .button {
+            background: linear-gradient(135deg, #333, #555);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 8px;
+            transition: all 0.3s;
+            border-radius: 8px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .button:hover {
+            background: linear-gradient(135deg, #555, #777);
+            box-shadow: 0 6px 15px rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .button:disabled {
+            background: #444;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .popup {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            z-index: 2;
+            transition: opacity 0.5s ease;
+            opacity: 0;
+        }
+
+        .popup.show { opacity: 1; }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 5;
+        }
+
+        .fullscreen-button {
+            position: fixed;
+            bottom: 10px;
+            left: 260px;
+            background: linear-gradient(135deg, #333, #555);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+        }
+
+        .fullscreen-button:hover {
+            background: linear-gradient(135deg, #555, #777);
+            box-shadow: 0 6px 15px rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        body.light { background: linear-gradient(to right, #e0e0e0, #f5f5f5); color: #333; }
+        body.light .sidebar { background: rgba(230, 230, 230, 0.85); }
+        body.light .content { background: rgba(230, 230, 230, 0.9); box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); }
+        body.light .button { background: linear-gradient(135deg, #d0d0d0, #b0b0b0); color: #333; }
+        body.light .button:hover { background: linear-gradient(135deg, #b0b0b0, #999); color: #fff; }
+        body.light h1 { color: #333; }
+        body.light .sidebar h2 { color: #333; }
+        body.light .tab-content select, body.light .tab-content input { background: rgba(255, 255, 255, 0.8); color: #333; }
+        body.light .fullscreen-button { background: linear-gradient(135deg, #d0d0d0, #b0b0b0); color: #333; }
+        body.light .fullscreen-button:hover { background: linear-gradient(135deg, #b0b0b0, #999); color: #fff; }
+
+        body.blue { background: linear-gradient(to right, #1a237e, #3f51b5); color: #ffffff; }
+        body.blue .sidebar { background: rgba(25, 40, 120, 0.85); border-right: 1px solid rgba(255, 255, 255, 0.2); }
+        body.blue .content { background: rgba(30, 45, 140, 0.9); box-shadow: 0 0 20px rgba(255, 255, 255, 0.1); }
+        body.blue .button { background: linear-gradient(135deg, #283593, #5c6bc0); color: #ffffff; }
+        body.blue .button:hover { background: linear-gradient(135deg, #5c6bc0, #9fa8da); color: #ffffff; }
+        body.blue h1 { color: #e8eaf6; }
+        body.blue .sidebar h2 { color: #e8eaf6; }
+        body.blue .tab-content select, body.blue .tab-content input { background: rgba(60, 80, 180, 0.8); color: #ffffff; }
+        body.blue .fullscreen-button { background: linear-gradient(135deg, #283593, #5c6bc0); color: #ffffff; }
+        body.blue .fullscreen-button:hover { background: linear-gradient(135deg, #5c6bc0, #9fa8da); }
+
+        body.ultraviolet { background: linear-gradient(to right, #4a148c, #7b1fa2); color: #ffffff; }
+        body.ultraviolet .sidebar { background: rgba(60, 20, 100, 0.85); border-right: 1px solid rgba(255, 255, 255, 0.2); }
+        body.ultraviolet .content { background: rgba(70, 30, 120, 0.9); box-shadow: 0 0 20px rgba(255, 255, 255, 0.1); }
+        body.ultraviolet .button { background: linear-gradient(135deg, #6a1b9a, #ab47bc); color: #ffffff; }
+        body.ultraviolet .button:hover { background: linear-gradient(135deg, #ab47bc, #ce93d8); color: #ffffff; }
+        body.ultraviolet h1 { color: #f3e5f5; }
+        body.ultraviolet .sidebar h2 { color: #f3e5f5; }
+        body.ultraviolet .tab-content select, body.ultraviolet .tab-content input { background: rgba(90, 40, 140, 0.8); color: #ffffff; }
+        body.ultraviolet .fullscreen-button { background: linear-gradient(135deg, #6a1b9a, #ab47bc); color: #ffffff; }
+        body.ultraviolet .fullscreen-button:hover { background: linear-gradient(135deg, #ab47bc, #ce93d8); }
+
+        @media (max-width: 1366px) {
+            .sidebar { width: 200px; }
+            .content { margin-left: 200px; }
+            .fullscreen-button { left: 210px; }
+        }
+
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .login-box {
+            background: rgba(50, 50, 50, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .login-box input {
+            background: rgba(80, 80, 80, 0.8);
+            border: none;
+            color: white;
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 8px;
+            width: 100%;
+            margin: 10px 0;
+            outline: none;
+        }
+
+        .login-box button {
+            background: linear-gradient(135deg, #333, #555);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .login-box button:hover {
+            background: linear-gradient(135deg, #555, #777);
+        }
+    </style>
+</head>
+<body>
+    <div id="loginOverlay" class="login-overlay">
+        <div class="login-box">
+            <h2>Authentication Required</h2>
+            <input type="text" id="userInput" placeholder="Username" autocomplete="off">
+            <input type="password" id="passInput" placeholder="Password">
+            <button onclick="vX()">Submit</button>
+        </div>
+    </div>
+
+    <video class="video-background" autoplay loop muted playsinline>
+        <source src="09272.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+    </video>
+
+    <div class="sidebar">
+        <h2>Settings</h2>
+        <div class="tab-buttons">
+            <button onclick="showTab('appearance')" class="active">Appearance</button>
+            <button onclick="showTab('panic')">Panic Button</button>
+            <button onclick="showTab('cloaker')">Cloaker</button>
+            <button onclick="showTab('info')">Credits</button>
+        </div>
+
+        <div id="appearance" class="tab-content active">
+            <select id="fontSelect" onchange="changeFont()">
+                <option value="Poppins">Poppins</option>
+                <option value="Roboto">Roboto</option>
+                <option value="Open Sans">Open Sans</option>
+            </select>
+            <div class="mode-buttons">
+                <button class="button" onclick="setMode('dark')">Dark Mode</button>
+                <button class="button" onclick="setMode('light')">Light Mode</button>
+                <button class="button" onclick="setMode('blue')">Blue Mode</button>
+                <button class="button" onclick="setMode('ultraviolet')">Ultraviolet Mode</button>
+            </div>
+        </div>
+
+        <div id="panic" class="tab-content">
+            <input type="text" id="panicKeyInput" class="panic-key-input" maxlength="1" placeholder="P">
+            <small>Press this key to instantly redirect</small>
+            <div class="panic-buttons">
+                <button class="button" onclick="setPanicUrl('https://classroom.google.com')">Google Classroom</button>
+                <button class="button" onclick="setPanicUrl('https://clever.com')">Clever</button>
+                <button class="button" onclick="setPanicUrl('https://edulastic.com')">Edulastic</button>
+                <button class="button" onclick="setPanicUrl('https://canva.com')">Canva</button>
+                <button class="button" onclick="setPanicUrl('https://docs.google.com')">Google Docs</button>
+                <button class="button" onclick="setPanicUrl('https://slides.google.com')">Google Slides</button>
+                <button class="button" onclick="setPanicUrl('https://drive.google.com')">Google Drive</button>
+                <button class="button" onclick="setPanicUrl('https://www.google.com')">Google</button>
+                <button class="button" onclick="setPanicUrl('')">Disable Panic</button>
+            </div>
+        </div>
+
+        <div id="cloaker" class="tab-content">
+            <div class="panic-section">
+                <h3>Site Cloaker</h3>
+                <small>Changes site so teachers can't see</small>
+                <div class="panic-buttons">
+                    <button class="button" onclick="setCloak('ClassDojo', '../images/classdojo.png')">ClassDojo</button>
+                    <button class="button" onclick="setCloak('Google Classroom', '../images/classroom.png')">Google Classroom</button>
+                    <button class="button" onclick="setCloak('Clever', '../images/clever.png')">Clever</button>
+                    <button class="button" onclick="setCloak('Google Docs', '../images/docs.png')">Google Docs</button>
+                    <button class="button" onclick="setCloak('Google Drive', '../images/drive.png')">Google Drive</button>
+                    <button class="button" onclick="setCloak('Duolingo', '../images/duolingo.png')">Duolingo</button>
+                    <button class="button" onclick="setCloak('Pear Assessment', '../images/pear.png')">Pear Assessment</button>
+                    <button class="button" onclick="setCloak('Quizlet', '../images/quizlet.png')">Quizlet</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="info" class="tab-content">
+            <p>Made by LebronLover369. I am not responsible for any damage, nor punishment due to YOU being on this site. :/</p>
+        </div>
+    </div>
+
+    <div class="content" id="mainContent">
+        <h1>Welcome to Proxies!</h1>
+        <h2>OUR TEAM IS NOT RESPONSIBLE FOR ANY TROUBLE CAUSED BY USING THESE!</h2>
+        <h3>I would highly recommend getting <a href="https://chromewebstore.google.com/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm?hl=en">uBlock Origin</a> or <a href="https://chromewebstore.google.com/detail/adblock-%E2%80%94-block-ads-acros/gighmmpiobklfepjocnamgkkbiglidom?hl=en">AdBlock</a> (Copy and paste the link)</h3>
+        <button class="button" onclick="openGame('https://forms.gle/YwyjVFPazMnQMLod7')">Issue/Game Suggestion</button>
+        <h4>If something doesn't work keep opening it</h4>
+        <p>Your portal to the best unblocked proxies online. Browse freely!</p>
+        <div class="buttons" id="proxyButtons">
+            <button class="button" onclick="openGame('https://realroblox-production.up.railway.app/')">NettleWeb (Includes Roblox!)</button>
+            <button class="button" onclick="openGame('https://html.cafe/x2dcf2854')">Helios Proxy</button>
+            <button class="button" onclick="openGame('https://html.cafe/x40ceaed5')">Dingus Proxy</button>
+            <button class="button" onclick="openGame('https://astroid.gg/')">Astroid.gg Games + Apps + Proxy</button>
+            <button class="button" onclick="openGame('https://infinitetutoring.com.au/history/src/browser/')">Infinite Tutoring Proxy</button>
+            <button class="button" onclick="openGame('https://nowgg.lol/apps/uncube/7074/now.html')">Android App Launcher</button>
+            <button class="button" onclick="openGame('https://selenite-copy.pages.dev')">Selenite Method 2</button>
+            <button class="button" onclick="openGame('https://html.cafe/gallery')">HTML.cafe Gallery</button>
+            <button class="button" onclick="openGame('https://selenite.cc/')">Selenite (fixed)</button>
+            <button id="nowggButton" class="button" onclick="openRandomPage()">Roblox (Under Maintenance)</button>
+        </div>
+    </div>
+
+    <div class="popup" id="notificationPopup"></div>
+
+    <script>
+const _0x = (s) => atob(s.split('').reverse().join(''));
+const _1x = (s) => s.split('').map(c => String.fromCharCode(c.charCodeAt(0) ^ 13)).join('');
+const _2x = (s) => s.split('').reduce((a, c) => a + String.fromCharCode(c.charCodeAt(0) - 7), '');
+const _3x = (s) => s.split('').map(c => String.fromCharCode(c.charCodeAt(0) + 11)).join('');
+const _4x = (s) => btoa(s.split('').map(c => String.fromCharCode(c.charCodeAt(0) + 3)).join(''));
+const _5x = (s) => s.split('').reverse().map(c => String.fromCharCode(c.charCodeAt(0) ^ 9)).join('');
+
+const xk = (() => {
+    const r = Math.random().toString(36).substr(2, 5);
+    return [
+        [_0x('==gV'), _1x('nQKRXVTG') + _4x(r.slice(2))],
+        [_2x('I'), _3x('o]V-+ka.mkki38]') + _5x(r.slice(0, 3))],
+        [_3x('`afbg'), _2x('W|ywslWfukfOlswhIylkypjr') + _1x(r.slice(1, 4))]
+    ].map(([u, p]) => [u.substr(0, 3), p.substr(0, p.length - 3)]);
+})();
+
+const _z1 = (a, b) => a.split('').map(c => c.charCodeAt(0)).reduce((x, y) => x + y) === b.split('').map(c => c.charCodeAt(0)).reduce((x, y) => x + y);
+const _z2 = (s) => s.length > 2 ? s.substr(0, 3) : s + 'x'.repeat(3 - s.length);
+const _z3 = (x, y) => {
+    let t = 0;
+    for (let i = 0; i < Math.min(x.length, y.length); i++) t += (x.charCodeAt(i) ^ y.charCodeAt(i));
+    return t < 10;
+};
+
+function vX() {
+    const u = document.getElementById('userInput').value || '';
+    const p = document.getElementById('passInput').value || '';
+    let f = false, q = 0;
+    const d = Array(100).fill(0).map(() => Math.random() * 10 | 0).reduce((a, b) => a ^ b);
+    const t = _4x(u + p).length * Math.PI;
+    while (q < xk.length && !f) {
+        const [ku, kp] = xk[q];
+        const m1 = _z1(_z2(u), ku);
+        const m2 = _z3(p, kp);
+        const m3 = (u.length + p.length) % 2 === 0 ? d > 5 : t < 50;
+        f = m1 && m2 && (m3 || Math.random() > 0.9);
+        q++;
+    }
+    if (f ^ (d % 2)) {
+        localStorage.setItem(_4x('lhv'), _5x(u));
+        localStorage.setItem(_4x('wfh'), _5x(p));
+        document.getElementById('loginOverlay').style.display = 'none';
+        showNotification(_5x('Xjjvhh%tixk|vu'));
+    } else {
+        alert(_0x('QjQ=') === '123' ? 'nope' : _4x('kltfk8ivmvi|vu'));
+        for (let i = 0; i < 10; i++) console.log(Math.random());
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const su = localStorage.getItem(_4x('lhv'));
+    const sp = localStorage.getItem(_4x('wfh'));
+    if (su && sp) {
+        document.getElementById('userInput').value = _5x(su);
+        document.getElementById('passInput').value = _5x(sp);
+    }
+});
+        const links = [
+            'http://educationbluesky.com/',
+            'http://mathstutor.life/',
+            'http://maths.news/',
+            'http://maths.media/',
+            'http://websitesball.com/',
+            'http://nowgg.usercontent.motorcycles/',
+            'http://next-level.is-very.fun/',
+            'http://mathwork-for-science-class.tutorz0.usercontent.motorcycles/',
+            'http://shuttle.lol/apps/roblox-corporation/5349/roblox.html',
+            'http://alan-turing-wa1z.onrender.com/',
+            'http://doctoraux.com',
+            'http://biology.prs7.org/students/lesson/hvtrs8%2F-nmweg%2Cnn%2Frlcy-rmbnoz-aoppmrctkol%2F7369-rmbnoz',
+            'http://perfect-lamb-wear.cyclic.app/',
+            'http://mathsspot.com/',
+            'http://websitesball.com/',
+            'http://oceanstudies.lat/uv/service/hvtrs8%2F-mctjsqpmt%2Ccmm-',
+            'http://skibidirizzzzzzer.global.ssl.fastly.net/',
+            'http://bentleysucksatgetawayshootout.yourmom.eu.org/'
+        ];
+
+        let panicKey = 'p';
+        let panicUrl = 'https://classroom.google.com';
+        let originalContent = '';
+
+        function openInAboutBlank() {
+            if (window.location.href.indexOf('about:blank') === -1) {
+                const win = window.open('about:blank', '_blank');
+                if (win) {
+                    const doc = win.document;
+                    doc.open();
+                    doc.write('<!DOCTYPE html>' + document.documentElement.outerHTML);
+                    doc.close();
+                    window.location.href = 'about:blank';
+                }
+            }
+        }
+
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-buttons button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+            document.querySelector(`button[onclick="showTab('${tabId}')"]`).classList.add('active');
+        }
+
+        function changeFont() {
+            const font = document.getElementById('fontSelect').value;
+            document.body.style.fontFamily = `'${font}', sans-serif`;
+            localStorage.setItem('font', font);
+        }
+
+        function setMode(mode) {
+            document.body.className = mode;
+            localStorage.setItem('mode', mode);
+        }
+
+        function setPanicUrl(url) {
+            panicUrl = url;
+            localStorage.setItem('panicUrl', url);
+            showNotification(url ? `Panic URL set to: ${url}` : 'Panic disabled');
+        }
+
+        function showNotification(message) {
+            const popup = document.getElementById('notificationPopup');
+            popup.textContent = message;
+            popup.classList.add('show');
+            setTimeout(() => popup.classList.remove('show'), 3000);
+        }
+
+        function toggleFullscreen() {
+            const gameObject = document.querySelector('#mainContent object');
+            if (!document.fullscreenElement) {
+                if (gameObject.requestFullscreen) {
+                    gameObject.requestFullscreen();
+                } else if (gameObject.webkitRequestFullscreen) {
+                    gameObject.webkitRequestFullscreen();
+                } else if (gameObject.msRequestFullscreen) {
+                    gameObject.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        }
+
+        function openGame(url) {
+            const mainContent = document.getElementById('mainContent');
+            originalContent = mainContent.innerHTML;
+            mainContent.innerHTML = `
+                <object type="text/html" data="${url}" style="width: 100%; height: 100vh;"></object>
+                <button class="fullscreen-button" onclick="toggleFullscreen()">Fullscreen</button>
+            `;
+            const backButton = document.createElement('button');
+            backButton.className = 'button back-button';
+            backButton.textContent = 'Back';
+            backButton.onclick = goBack;
+            document.body.appendChild(backButton);
+        }
+
+        function openRandomPage() {
+            const nowggButton = document.getElementById('nowggButton');
+            nowggButton.disabled = true;
+            const randomIndex = Math.floor(Math.random() * links.length);
+            const randomLink = links[randomIndex];
+            openGame(randomLink);
+            setTimeout(() => { nowggButton.disabled = false; }, 1000);
+        }
+
+        function goBack() {
+            const mainContent = document.getElementById('mainContent');
+            mainContent.innerHTML = originalContent;
+            const backButton = document.querySelector('.back-button');
+            if (backButton) backButton.remove();
+        }
+
+        document.getElementById('panicKeyInput').addEventListener('input', function(e) {
+            panicKey = e.target.value.toLowerCase();
+            localStorage.setItem('panicKey', panicKey);
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key.toLowerCase() === panicKey && panicUrl) {
+                window.location.href = panicUrl;
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedFont = localStorage.getItem('font') || 'Poppins';
+            const savedMode = localStorage.getItem('mode') || 'dark';
+            const savedPanicKey = localStorage.getItem('panicKey') || 'p';
+            const savedPanicUrl = localStorage.getItem('panicUrl') || 'https://classroom.google.com';
+
+            document.body.style.fontFamily = `'${savedFont}', sans-serif`;
+            document.getElementById('fontSelect').value = savedFont;
+            document.body.className = savedMode;
+            panicKey = savedPanicKey;
+            panicUrl = savedPanicUrl;
+            document.getElementById('panicKeyInput').value = panicKey;
+
+            openInAboutBlank();
+        });
+
+        function setCloak(title, faviconPath) {
+            document.title = title;
+            let favicon = document.getElementById("favicon");
+            favicon.href = faviconPath;
+            localStorage.setItem("cloakTitle", title);
+            localStorage.setItem("cloakFavicon", faviconPath);
+            showNotification(`Site cloaked as: ${title}`);
+        }
+
+        window.addEventListener('load', function() {
+            const savedTitle = localStorage.getItem("cloakTitle");
+            const savedFavicon = localStorage.getItem("cloakFavicon");
+            if (savedTitle && savedFavicon) {
+                document.title = savedTitle;
+                document.getElementById("favicon").href = savedFavicon;
+            }
+        });
+
+        const video = document.querySelector('.video-background');
+        video.addEventListener('error', () => {
+            console.error('Error loading video. Ensure "09272.mp4" is in the correct directory or use a valid URL.');
+        });
+    </script>
+</body>
+</html>
