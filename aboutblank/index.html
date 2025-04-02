@@ -1995,33 +1995,48 @@ function openInAboutBlank() {
     const aboutBlankWindow = window.open('about:blank', '_blank');
     if (aboutBlankWindow) {
         const doc = aboutBlankWindow.document;
-        // Retrieve cloaked settings with fallbacks
         const cloakedTitle = localStorage.getItem('cloakTitle') || 'Shep Games';
-        let cloakedFavicon = localStorage.getItem('cloakFavicon') || 'sheep-favicon.ico';
+        const cloakedFavicon = localStorage.getItem('cloakFavicon') || 'sheep-favicon.ico';
 
-        // Log for debugging
-        console.log('Cloaked Title:', cloakedTitle);
-        console.log('Cloaked Favicon:', cloakedFavicon);
+        console.log('Opening about:blank - Title:', cloakedTitle, 'Favicon:', cloakedFavicon); // Debug
 
-        // Write the HTML with dynamic title and favicon
         doc.write(`
             <!DOCTYPE html>
             <html>
             <head>
                 <title>${cloakedTitle}</title>
                 <link rel="icon" type="image/png" href="${cloakedFavicon}">
+                <script>
+                    function enforceCloaking() {
+                        document.title = "${cloakedTitle}";
+                        let link = document.querySelector("link[rel='icon']");
+                        if (!link) {
+                            link = document.createElement('link');
+                            link.rel = 'icon';
+                            link.type = 'image/png';
+                            document.head.appendChild(link);
+                        }
+                        link.href = "${cloakedFavicon}";
+                        console.log('Enforced cloaking in about:blank - Title:', "${cloakedTitle}", 'Favicon:', "${cloakedFavicon}");
+                    }
+                    window.onload = enforceCloaking;
+                </script>
             </head>
             <body style="margin:0;padding:0;overflow:hidden;">
-                <iframe src="${currentUrl}" style="width:100%;height:100vh;border:none;"></iframe>
+                <iframe src="${currentUrl}" style="width:100%;height:100vh;border:none;" onload="enforceCloaking()"></iframe>
             </body>
             </html>
         `);
         doc.close();
-
+        
         // Redirect the original tab
         window.location.href = 'about:blank';
     } else {
-        console.error('Failed to open about:blank window. Check popup blocker.');
+        console.error('Failed to open about:blank window. Popup blocker may be active.');
+        const popup = document.getElementById('greetingPopup');
+        popup.textContent = 'Failed to open about:blank. Check popup blocker.';
+        popup.classList.add('show');
+        setTimeout(() => popup.classList.remove('show'), 3000);
     }
 }
         function openGame(url) {
@@ -2128,11 +2143,12 @@ function openInAboutBlank() {
     document.title = title;
     document.getElementById("favicon").href = faviconPath;
     localStorage.setItem("cloakTitle", title);
-    localStorage.setItem("cloakFavicon", faviconPath); // Store the exact path
+    localStorage.setItem("cloakFavicon", faviconPath);
     const popup = document.getElementById('greetingPopup');
     popup.textContent = `Site cloaked as: ${title}`;
     popup.classList.add('show');
     setTimeout(() => popup.classList.remove('show'), 3000);
+    console.log('Cloak set - Title:', title, 'Favicon:', faviconPath); // Debug
 }
 
         document.getElementById('panicKeyInput').addEventListener('input', function(e) {
@@ -2146,7 +2162,7 @@ function openInAboutBlank() {
             }
         });
 
-        window.addEventListener('load', () => {
+   window.addEventListener('load', () => {
     const savedMode = localStorage.getItem('appearanceMode') || 'light';
     const savedFont = localStorage.getItem('fontFamily') || 'Poppins';
     const savedPanicKey = localStorage.getItem('panicKey') || ']';
@@ -2158,9 +2174,7 @@ function openInAboutBlank() {
     document.body.classList.add(`${savedMode}-mode`);
     document.body.style.fontFamily = `'${savedFont}', sans-serif`;
     document.getElementById('fontSelect').value = savedFont;
-    document.getElementById('aboutBlankToggle').checked = useAboutBlank; // Set slider state
-    panicKey = savedPanicKey;
-    panicUrl = savedPanicUrl;
+    document.getElementById('aboutBlankToggle').checked = useAboutBlank;
     if (savedTitle && savedFavicon) {
         document.title = savedTitle;
         document.getElementById("favicon").href = savedFavicon;
@@ -2168,11 +2182,7 @@ function openInAboutBlank() {
     if (userUsername) {
         mainContent.style.display = "block";
     }
-
-    // If about:blank is enabled, apply it on load (optional behavior)
-    if (useAboutBlank) {
-        openInAboutBlank();
-    }
+    console.log('Page loaded - Cloak Title:', savedTitle, 'Cloak Favicon:', savedFavicon); // Debug
 });
     </script>
 </body>
