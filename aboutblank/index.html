@@ -13,7 +13,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease-in-out;
         }
 
         body, html {
@@ -41,22 +41,16 @@
             background: linear-gradient(to top, #32cd32, #228b22);
             z-index: 0;
             transform: perspective(500px) rotateX(45deg);
-            box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.3);
-            animation: grassPulse 5s infinite ease-in-out;
-        }
-
-        @keyframes grassPulse {
-            0%, 100% { transform: perspective(500px) rotateX(45deg) scale(1); }
-            50% { transform: perspective(500px) rotateX(45deg) scale(1.02); }
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.5s ease;
         }
 
         .cloud {
             position: absolute;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 50%;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.8);
-            animation: float infinite linear;
-            transform: translateZ(0);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(255, 255, 255, 0.8);
+            animation: float linear infinite;
             z-index: 1;
             opacity: 0.9;
         }
@@ -71,10 +65,10 @@
         .cloud:nth-child(4n) { width: 180px; height: 110px; top: 25%; animation-duration: 28s; }
 
         @keyframes float {
-            0% { transform: translateX(-20vw) translateZ(0); opacity: 0; }
+            0% { transform: translateX(-20vw); opacity: 0; }
             10% { opacity: 0.9; }
             90% { opacity: 0.9; }
-            100% { transform: translateX(120vw) translateZ(0); opacity: 0; }
+            100% { transform: translateX(120vw); opacity: 0; }
         }
 
         .settings-bar {
@@ -88,13 +82,12 @@
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(5px);
             color: #228b22;
-            opacity: 0;
             transform: translateY(-100%);
-            animation: slideIn 0.5s forwards 0.5s;
+            animation: slideIn 0.5s ease forwards 0.5s;
         }
 
         @keyframes slideIn {
-            to { opacity: 1; transform: translateY(0); }
+            to { transform: translateY(0); }
         }
 
         body.dark-mode .settings-bar, body.blue-mode .settings-bar, body.ultraviolet-mode .settings-bar {
@@ -116,7 +109,6 @@
 
         .settings-bar a:hover {
             color: #32cd32;
-            transform: scale(1.1);
         }
 
         .content {
@@ -128,19 +120,19 @@
             max-width: 800px;
             margin: 60px auto 20px;
             text-align: center;
-            transform: perspective(1000px) rotateX(10deg) scale(0.9);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-            border: 3px solid #ffd700;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border: 2px solid #ffd700;
             color: #333;
             overflow-y: auto;
             max-height: calc(100vh - 80px);
             z-index: 2;
             opacity: 0;
-            animation: fadeInUp 0.7s forwards 0.7s;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s ease forwards 0.7s;
         }
 
         @keyframes fadeInUp {
-            to { opacity: 1; transform: perspective(1000px) rotateX(0deg) scale(1); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         body.dark-mode .content, body.blue-mode .content, body.ultraviolet-mode .content {
@@ -153,13 +145,7 @@
             font-weight: 500;
             color: #228b22;
             margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
         }
 
         h2 {
@@ -176,22 +162,19 @@
             font-size: 1.2rem;
             font-weight: 500;
             cursor: pointer;
-            border-radius: 10px;
-            transform: perspective(500px) translateZ(10px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             margin: 8px;
-            position: relative;
             display: inline-flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             min-width: 150px;
         }
 
         .button:hover {
-            transform: perspective(500px) translateZ(20px) scale(1.05);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
             background: #e6b923;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
         }
 
         #gamebuttons {
@@ -204,12 +187,7 @@
         .favicon {
             width: 32px;
             height: 32px;
-            margin-bottom: 5px;
-            transition: transform 0.2s ease-in-out;
-        }
-
-        .button:hover .favicon {
-            transform: scale(1.2);
+            margin-right: 8px;
         }
 
         .search-bar {
@@ -217,13 +195,13 @@
             color: #228b22;
             padding: 12px 20px;
             background: rgba(255, 255, 255, 0.7);
-            border-radius: 12px;
+            border-radius: 8px;
             width: 70%;
             max-width: 500px;
             margin: 15px auto;
             display: block;
             outline: none;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         body.dark-mode .search-bar, body.blue-mode .search-bar, body.ultraviolet-mode .search-bar {
@@ -233,11 +211,11 @@
 
         .no-results {
             display: none;
-            color: red;
+            color: #ff4444;
             font-size: 1rem;
             margin-top: 10px;
             opacity: 0;
-            animation: fadeIn 0.5s forwards;
+            animation: fadeIn 0.5s ease forwards;
         }
 
         @keyframes fadeIn {
@@ -249,12 +227,12 @@
             color: #228b22;
             padding: 12px 20px;
             background: rgba(255, 255, 255, 0.7);
-            border-radius: 12px;
+            border-radius: 8px;
             height: 40px;
             line-height: 16px;
             overflow: hidden;
             white-space: nowrap;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
         }
 
@@ -270,11 +248,11 @@
             background: rgba(255, 255, 255, 0.9);
             color: #228b22;
             padding: 15px 25px;
-            border-radius: 12px;
+            border-radius: 8px;
             border: 2px solid #ffd700;
             font-size: 1rem;
             z-index: 3;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         body.dark-mode .popup, body.blue-mode .popup, body.ultraviolet-mode .popup {
@@ -284,7 +262,7 @@
 
         .popup.show {
             right: 20px;
-            animation: slideInRight 0.5s forwards;
+            animation: slideInRight 0.5s ease forwards;
         }
 
         @keyframes slideInRight {
@@ -296,17 +274,17 @@
             position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) perspective(1000px) rotateX(10deg);
+            transform: translate(-50%, -50%);
             background: rgba(255, 255, 255, 0.9);
-            padding: 40px;
-            border-radius: 15px;
-            border: 3px solid #ffd700;
+            padding: 30px;
+            border-radius: 12px;
+            border: 2px solid #ffd700;
             text-align: center;
             z-index: 4;
             opacity: 0;
             width: 90%;
             max-width: 500px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             color: #333;
             display: none;
         }
@@ -320,33 +298,33 @@
         .username-menu.show, .settings-menu.show {
             opacity: 1;
             display: block;
-            animation: popIn 0.5s forwards;
+            animation: popIn 0.5s ease forwards;
         }
 
         @keyframes popIn {
-            from { opacity: 0; transform: translate(-50%, -50%) perspective(1000px) rotateX(20deg) scale(0.8); }
-            to { opacity: 1; transform: translate(-50%, -50%) perspective(1000px) rotateX(0deg) scale(1); }
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.95); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
         }
 
         .username-menu h2, .settings-menu h2 {
             font-size: 1.8rem;
             color: #228b22;
-            margin-bottom: 30px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .username-menu input, .settings-menu select, .settings-menu .panic-key-input {
             background: #fff;
             border: 2px solid #b8860b;
             color: #228b22;
-            padding: 12px;
-            font-size: 1.1rem;
-            border-radius: 10px;
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 8px;
             width: 70%;
             max-width: 300px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             outline: none;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         body.dark-mode .username-menu input, body.blue-mode .username-menu input, body.ultraviolet-mode .username-menu input,
@@ -369,21 +347,27 @@
             padding: 10px 30px;
             font-size: 1rem;
             cursor: pointer;
-            border-radius: 10px;
-            transform: perspective(500px) translateZ(10px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         .username-menu button:hover, .settings-menu button:hover {
-            transform: perspective(500px) translateZ(20px);
             background: #e6b923;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
         }
 
         .settings-menu .tab-buttons {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin-bottom: 30px;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .settings-menu .tab-buttons button {
+            padding: 8px 20px;
+            font-size: 0.9rem;
         }
 
         .settings-menu .tab-content {
@@ -397,20 +381,23 @@
         .mode-buttons, .panic-buttons {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
+            gap: 10px;
             justify-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 10px;
         }
 
         .panic-section h3 {
             font-size: 1.4rem;
             color: #32cd32;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .panic-section small {
             display: block;
-            margin-top: 20px;
+            margin-top: 15px;
             color: #b0b0b0;
             font-size: 0.9rem;
         }
@@ -421,7 +408,7 @@
             right: 20px;
             z-index: 5;
             opacity: 0;
-            animation: fadeIn 0.5s forwards 0.2s;
+            animation: fadeIn 0.5s ease forwards 0.2s;
         }
 
         .fullscreen-button {
@@ -434,14 +421,14 @@
             padding: 8px 15px;
             font-size: 12px;
             cursor: pointer;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             z-index: 1000;
         }
 
         .fullscreen-button:hover {
             background: #e6b923;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
             transform: translateY(-2px);
         }
 
@@ -456,8 +443,8 @@
         .toggle-switch {
             position: relative;
             display: inline-block;
-            width: 60px;
-            height: 34px;
+            width: 50px;
+            height: 24px;
         }
 
         .toggle-switch input {
@@ -474,19 +461,19 @@
             right: 0;
             bottom: 0;
             background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
+            transition: .3s ease;
+            border-radius: 24px;
         }
 
         .slider:before {
             position: absolute;
             content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
             background-color: white;
-            transition: .4s;
+            transition: .3s ease;
             border-radius: 50%;
         }
 
@@ -520,1220 +507,1219 @@
         </div>
         <input class="search-bar" id="search" onkeyup="searchGames()" placeholder="Search for a game..." type="text"/>
         <div id="gamebuttons">
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/1on1soccer/')">
-                1 on 1 Soccer
-            </button>
-            <button class="button" onclick="openGame('https://neal.fun/infinite-craft/')">
-                Neal.Fun Infinite Craft
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/1v1lol/')">
-                1v1.lol
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/offBrandFortnite/')">
-                Off Brand Fortnite
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/achieveunlocked/')">
-                Achievement Unlocked
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/achieveunlocked2/')">
-                Achievement Unlocked 2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/adarkroom/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_adarkroom__favicon.ico"/>
-                A Dark Room
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/adventure-capitalist/')">
-                Adventure Capitalist
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/ageofwar/')">
-                Age Of War
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/amazing-rope-police/')">
-                Amazing Rope Police
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/amongus/')">
-                Among Us
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/avalanche/')">
-                Avalanche
-            </button>
-            <button class="button" onclick="openGame('https://medv.io/bit-planes/?mode=swarm')">
-                Bit Planes
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/badicecream2/')">
-                Bad Ice Cream 2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/badicecream3/')">
-                Bad Ice Cream 3
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/badocecream/')">
-                Bad Ice Cream
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/badpiggies/')">
-                Bad Piggies
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/basketbros/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_basketbros__favicon.png"/>
-                Basket Bros
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/basketball-stars/')">
-                Basketball Stars
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/bloxors/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_bloxors__favicon.ico"/>
-                Bloxors
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/bloodtournament/')">
-                Blood Tournament
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/boxingphysics2/')">
-                Boxing Physics 2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/championisland/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_championisland__favicon.ico"/>
-                Champion Island
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/chess/')">
-                Chess
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/circloo/')">
-                Circloo
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/codz/')">
-                Cod Zombies (Multiplayer!)
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/cuttherope/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_cuttherope__favicon.ico"/>
-                Cut The Rope
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/cuttherope-holiday/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_cuttherope-holiday__favicon.ico"/>
-                Cut The Rope Holiday
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/duck-life-1/')">
-                Duck Life
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/ducklife2/')">
-                Duck Life 2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/ducklife4/')">
-                Duck Life 4
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/eggycar/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_eggycar__favicon.png"/>
-                Eggy Car
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/fruit-ninja/')">
-                Fruit Ninja
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/funnyshooter2/')">
-                Funny Shooter 2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/fnf/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_fnf__favicon.png"/>
-                FNF
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/google-snake/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_google-snake__favicon.png"/>
-                Google Snake
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/hole.io/')">
-                Hole.io
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/hypercars/')">
-                HyperCars
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/jetpack/')">
-                Jetpack Joyride
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/justfall/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_justfall__favicon.png"/>
-                Just Fall
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/Slope/')">
-                Slope
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/keylimba/')">
-                KeyLimba
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/merge-round-racers/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_merge-round-racers__favicon.png"/>
-                Merge Round Racers
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/monkeymart/')">
-                Monkey Mart
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/motox3m-2/')">
-                Motox3m 2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/motox3mpoolparty/')">
-                Motox3m Summer
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/motox3mspookyland/')">
-                Motox3m Halloween
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/motox3mwinter/')">
-                Motox3m Winter
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/paperio-2/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_paperio-2__favicon.png"/>
-                Paper.io 2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/paperio2/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_paperio2__favicon.png"/>
-                PaperIo 2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/papas-pizzaria/')">
-                Papa's Pizzaria
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/papasb/')">
-                Papa's Burgeria
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/polytrack/')">
-                Polytrack
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/retrob/')">
-                Retro Bowl
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/ragdoll-archers/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_ragdoll-archers__favicon.png"/>
-                Ragdoll Archers
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/racing-limits/')">
-                Racing Limits
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/rocket-league/')">
-                Rocket League
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/rooftop-snipers111/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_rooftop-snipers111__favicon.png"/>
-                Rooftop Snipers
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/slow-roads/')">
-                Slow Roads
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/soccer-random/')">
-                Soccer Random
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/stickman/')">
-                Stickman Hook
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/stuntcars/')">
-                Madalin Stunt Cars
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/super-star-car/')">
-                Super Star Cars
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/sushi-unroll/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_sushi-unroll__favicon.png"/>
-                Sushi Roll
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/subwaysurfers/')">
-                Subway Surfers
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/tanuki-sunset/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_tanuki-sunset__favicon.png"/>
-                Tanuki Sunset
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/tag/')">
-                Tag
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/tunnel-rush/')">
-                Tunnel Rush
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/temple-run-2/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_temple-run-2__favicon.png"/>
-                Temple Run 2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/temple-run-22/')">
-                Temple Run 2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/tiny-fishing1/')">
-                Tiny Fishing
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/volley-random/')">
-                Volley Random
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/xx142-b2exe/')">
-                XX142-B2EXE
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/hilldraw/')">
-                Hilldraw
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/glass-city/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_glass-city__favicon.ico"/>
-                Glass City
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/fortcraft/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_fortcraft__favicon.ico"/>
-                FortCraft
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/flappyb/')">
-                Flappybird
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/fireboyandwatergirl/')">
-                Fireboy and Watergirl
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/drift-hunters/')">
-                Drift Hunters
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/dreader/')">
-                Dreader
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/deathrun/')">
-                Deathrun
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/crossy/')">
-                Crossyroad
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/cars-simulator/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_cars-simulator__favicon.ico"/>
-                Cars Simulator
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/breakoid/')">
-                Breakoid
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/breaklock/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_breaklock__favicon.ico"/>
-                Breaklock
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/boxing-random/')">
-                Boxing Random
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/bombhopper/')">
-                Bombhopper
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/baconmaydie/')">
-                Bacon May Die
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/bigredbutton/')">
-                Big Red Button
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/burgerandfrights/')">
-                Burger and Frights
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/basketbros-io/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_basketbros-io__favicon.png"/>
-                BasketBros.io
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/backrooms/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_backrooms__favicon.png"/>
-                Backrooms
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/aquapark-slides/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_aquapark-slides__favicon.png"/>
-                Aquapark Slides
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/vex3/')">
-                Vex 3
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/vex44/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_vex44__favicon.png"/>
-                Vex 4
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/vex55/')">
-                Vex 5
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/vex6/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_vex6__favicon.png"/>
-                Vex 6
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/vex7/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_vex7__favicon.png"/>
-                Vex 7
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/worlde1/')">
-                Worlde
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/dadish2/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_dadish2__favicon.png"/>
-                Dadish 2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/deal/')">
-                Deal
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/death-run-3d/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_death-run-3d__favicon.ico"/>
-                Death Run 3D
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/doom/')">
-                Doom
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/drag/')">
-                Drag
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/dragonballdevolution/')">
-                Dragonball Devolution
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/drift-boss11/')">
-                Drift Boss
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/drifthunters/')">
-                Drift Hunters
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/ducklife1-1/')">
-                Duck Life
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/ducklife3/')">
-                Duck Life 3
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/ducklife4-4/')">
-                Duck Life 4
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/ducklife5/')">
-                Duck Life 5
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/ducklife6/')">
-                Duck Life 6
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/emulatorjs/')">
-                Emulator JS
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/escapingtheprison/')">
-                Escaping The Prison
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/factoryballs/')">
-                Factory Balls
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/factoryballsforever/')">
-                Factory Balls Forever
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/fancypantsadventures/')">
-                Fancy Pants Adventures
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/fancypantsadventures2/')">
-                Fancy Pants Adventures 2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/fireboywatergirl/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_fireboywatergirl__favicon.png"/>
-                Fireboy and Watergirl
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/fireboywatergirl2/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_fireboywatergirl2__favicon.png"/>
-                Fireboy and Watergirl 2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/fireboywatergirl3/')">
-                Fireboy and Watergirl 3
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/fleeingthecomplex/')">
-                Fleeing The Complex
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/flippyfish/')">
-                Flippy Fish
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/fluidsim/')">
-                Fluid Simulator
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/funnyballgame/')">
-                Funny Ball Game
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/funnyshooter/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_funnyshooter__favicon.ico"/>
-                Funny Shooter
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/gba/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_gba__favicon.png"/>
-                GBA
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/getawayshooter/')">
-                Getaway Shooter
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/golddiggerfrvr/')">
-                Gold Digger FRVR
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/guiltygear/')">
-                Guilty Gear
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/gunmayhem/')">
-                Gun Mayhem
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/gunmayhem2/')">
-                Gun Mayhem 2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/gunmayhemredux/')">
-                Gun Mayhem Redux
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/halloween2016/')">
-                Hallloween 2016
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/happywheels/')">
-                Happy Wheels
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/helixjump/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_helixjump__favicon.png"/>
-                Helix Jump
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/hexgl/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_hexgl__favicon.png"/>
-                Hex GL
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/hextris/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_hextris__favicon.png"/>
-                Hextris
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/hillclimbracing2/')">
-                Hill Climb Racing 2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/holeio/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_holeio__favicon.ico"/>
-                Hole.io
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/idlebreakout/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_idlebreakout__favicon.png"/>
-                Idle Breakout
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/infinite-craft-unblocked/')">
-                Infinite Craft
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/infiltratingtheairship/')">
-                Infiltrating The Airship
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/knifehit/')">
-                Knife Hit
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/lasthorizon/')">
-                Last Horizon
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/lazyjump3d/')">
-                Lazy Jump 3D
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/learntofly2/')">
-                Learn To Fly 2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/learntoflyidle/')">
-                Learn To Fly Idle
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/linerider/')">
-                Line Rider
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/littlealchemy/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_littlealchemy__favicon.png"/>
-                Little Alchemy
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/lowsadventures2/')">
-                Lows Adventures 2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/mario/')">
-                Mario
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/metroidzeromission/')">
-                Metroid Zero Mission
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/minecraft-tower-defence-2/')">
-                Crafter Tower Defence 2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/minesweeper/')">
-                Minesweeper
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/monstertracks/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_monstertracks__favicon.ico"/>
-                Monstertracks
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/ngon/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_ngon__favicon.ico"/>
-                Ngon
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/ocarinaoftime/')">
-                The Legend Of Zelda: Ocarina Of Time
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/offlineparadise/')">
-                Offline Paradise
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/osu/')">
-                Osu!
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/osumainia/')">
-                Osu! Mania
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/pacman/')">
-                PacMan
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/pandemic/')">
-                Pandemic
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/pandemic2/')">
-                Pandemic2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/papasfreezeria/')">
-                Papa's Freezeria
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/paperio/')">
-                Paper.io
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/pizzatower/')">
-                Pizza Tower
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/pokemon/')">
-                Pokemon
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/pong/')">
-                Pong
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/pool/')">
-                Pool
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/poom/')">
-                Poom
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/redball3/')">
-                Red Ball 3
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/redball4/')">
-                Red Ball 4
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/redball4vol2/')">
-                Red Ball 4 Volume 2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/redball4vol3/')">
-                Red Ball 4 Volume 3
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/zombocalypse/')">
-                Zombocalypse
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/xp/')">
-                Windows XP
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/worldshardestgame/')">
-                Worlds Hardest Game
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/worldshardestgame2/')">
-                Worlds Hardest Game 2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/wordlebot/')">
-                Worlde Bot
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/watermelongame/')">
-                Watermelon Game
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/wallsmash/')">
-                Wallsmash
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/universal-paperclips/')">
-                Universal Paperclips
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/turbowarp/')">
-                Turbowarp
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/tube-jumpers/')">
-                Tube Jumpers
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/tron/')">
-                Tron
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/timeshooter3/')">
-                Time Shooter 3
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/timeshooter2/')">
-                Time Shooter 2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/timeshooter1/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_timeshooter1__favicon.ico"/>
-                Time Shooter
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/thisistheonlylevel2/')">
-                This Is The Only Level 2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/thisistheonlylevel/')">
-                This Is The Only Level
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/thritydollarwebsite/')">
-                Thirty Dollar Website
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/thereisnogame/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_thereisnogame__favicon.png"/>
-                There Is No Game
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/theimpossiblequiz/')">
-                The Impossible Quiz
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/theimpossiblegame/')">
-                The Impossible Game
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/thefinalearth2/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_thefinalearth2__favicon.png"/>
-                The Final Earth 2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/tabs/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_tabs__favicon.ico"/>
-                TABS
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/supersmashflash/')">
-                Super Smash Brothers Flash
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/supersmashbros/')">
-                Super Smash Brothers
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/supermeatboy/')">
-                Super Meat Boy
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/stickmangolf/')">
-                Stickman Golf
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/retrobowlcollege/')">
-                Retro Bowl College
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/riddleschool/')">
-                Riddle School
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/riddleschool2/')">
-                Riddle School 2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/riddleschool3/')">
-                Riddle School 3
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/riddleschool4/')">
-                Riddle School 4
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/riddleschool5/')">
-                Riddle School 5
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/risehigher/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_risehigher__favicon.png"/>
-                Rise Higher
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/rooftopsnipers2/')">
-                Rooftop Snipers 2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/run/')">
-                Run
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/run2/')">
-                Run 2
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/russiancardriver/')">
-                Russian Car Driver
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/sand/')">
-                Sand
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/sandtrix/')">
-                Sandtrix
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/shadow/')">
-                Shadow
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/skibiditoilet/')">
-                Skibidi Toilet
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/skibiditoiletattack/')">
-                Skibidi Toilet Attack
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/slope3/')">
-                Slope 3
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/snake/')">
-                Snake
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/snow/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_snow__favicon.ico"/>
-                Snow
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/snowrider3d/')">
-                Snow Rider 3D
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/solitare/')">
-                Solitare
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/soundboard/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_soundboard__favicon.png"/>
-                Soundboard
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/space/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_space__favicon.ico"/>
-                Space
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/spankthemonkey/')">
-                Spank The Monkey
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/sprinter/')">
-                Sprinter
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/stack1/')">
-                Stack
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/stealingthediamond/')">
-                Stealing The Diamond
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/stickmanboost/')">
-                <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_stickmanboost__favicon.png"/>
-                Stickman Boost
-            </button>
-            <button class="button" onclick="openGame('https://404gamesgithub.github.io/stickmanclimb/')">
-                Stickman Climb
-            </button>
-            <button class="button" onclick="openGame('https://skribbl.io')">
-                <img alt="favicon" class="favicon" src="icons/skribbl.io_favicon.png"/>
-                Skribbl.io
-            </button>
-            <button class="button" onclick="openGame('https://eaglercraft.glitch.me/')">
-                Minecraft (1.5)
-            </button>
-            <button class="button" onclick="openGame('https://eaglercraft-archive.github.io/Koneclient-1.8-web/')">
-                <img alt="favicon" class="favicon" src="icons/eaglercraft-archive.github.io_Koneclient-1.8-web__favicon.ico"/>
-                Minecraft (1.8)
-            </button>
-            <button class="button" onclick="openGame('https://reslauncher4.vercel.app')">
-                <img alt="favicon" class="favicon" src="icons/reslauncher4.vercel.app_favicon.png"/>
-                Resent Client Eagler (1.8)
-            </button>
-            <button class="button" onclick="openGame('https://dfs3rzq44v6as.cloudfront.net/?frame=fullscreen/#/lessons/964c4358-60a7-4121-908e-63f6ae6e5ef0')">
-                <img alt="favicon" class="favicon" src="icons/dfs3rzq44v6as.cloudfront.net_?frame=fullscreen_#_lessons_964c4358-60a7-4121-908e-63f6ae6e5ef0_favicon.png"/>
-                Eaglercraft (1.20)
-            </button>
-            <button class="button" onclick="openGame('https://html.cafe/x7922b580')">
-                Eaglercraft Versions & Clients
-            </button>
-            <button class="button" onclick="openGame('https://www.easyfun.gg/games/roblox.html')">
-                Roblox (Easyfun.gg)
-            </button>
-            <button class="button" onclick="openGame('https://dashboard-cq4z.onrender.com/?ng_ifp_partner=skool')">
-                Roblox (Now.gg)
-            </button>
-            <button class="button" onclick="openGame('https://dfs3rzq44v6as.cloudfront.net/?frame=fullscreen/#/lessons/550673cd-2d7e-437e-ab86-baa249b52dd0')">
-                <img alt="favicon" class="favicon" src="icons/dfs3rzq44v6as.cloudfront.net_?frame=fullscreen_#_lessons_550673cd-2d7e-437e-ab86-baa249b52dd0_favicon.png"/>
-                Roblox (Now.gg 2)
-            </button>
-            <button class="button" onclick="openGame('https://nowgg.lol/')">
-                <img alt="favicon" class="favicon" src="icons/nowgg.lol__favicon.gif"/>
-                Roblox (Now.gg 3)
-            </button>
-            <button class="button" onclick="openGame('https://pathetic-roblox-main.vercel.app/')">
-                <img alt="favicon" class="favicon" src="icons/pathetic-roblox-main.vercel.app__favicon.png"/>
-                Roblox (Now.gg 4)
-            </button>
-            <button class="button" onclick="openGame('https://html.cafe/x8bcb5934')">
-                <img alt="favicon" class="favicon" src="icons/html.cafe_x8bcb5934_favicon.ico"/>
-                Roblox (Now.gg 5)
-            </button>
-            <button class="button" onclick="openGame('https://dfs3rzq44v6as.cloudfront.net')">
-                <img alt="favicon" class="favicon" src="icons/dfs3rzq44v6as.cloudfront.net_#_prxy_favicon.png"/>
-                Tortilla Games
-            </button>
-            <button class="button" onclick="openGame('https://dfs3rzq44v6as.cloudfront.net/#/prxy')">
-                <img alt="favicon" class="favicon" src="icons/dfs3rzq44v6as.cloudfront.net_#_prxy_favicon.png"/>
-                Ultraviolet
-            </button>
-            <button class="button" onclick="openGame('https://g.deev.is/fnaw')">
-                <img alt="favicon" class="favicon" src="icons/g.deev.is_fnaw_favicon.ico"/>
-                Five Nights At Winston's
-            </button>
-            <button class="button" onclick="openGame('https://neal.fun')">
-                Neal.fun
-            </button>
-            <button class="button" onclick="openGame('https://dddavit.github.io/subway/')">
-                Subway Surfers
-            </button>
-            <button class="button" onclick="openGame('https://mathadventure1.github.io/slope/slope/index.html')">
-                Slope
-            </button>
-            <button class="button" onclick="openGame('https://d3rtzzzsiu7gdr.cloudfront.net/gameplayer/index.html?Slope%202')">
-                Slope 2
-            </button>
-            <button class="button" onclick="openGame('https://slope3.com/')">
-                <img alt="favicon" class="favicon" src="icons/slope3.com__favicon.png"/>
-                Slope 3
-            </button>
-            <button class="button" onclick="openGame('https://eli-schwartz.github.io/cookieclicker/')">
-                Cookie Clicker
-            </button>
-            <button class="button" onclick="openGame('https://ubg365.github.io/drive-mad/play.html')">
-                Drive Mad
-            </button>
-            <button class="button" onclick="openGame('https://play.fancade.com/63BA239C20C40BF3')">
-                Drive Mad Mod
-            </button>
-            <button class="button" onclick="openGame('https://ubg365.github.io/bitlife-life-simulator/play.html')">
-                BitLife
-            </button>
-            <button class="button" onclick="openGame('https://zty.pe')">
-                <img alt="favicon" class="favicon" src="icons/zty.pe_favicon.png"/>
-                Ztype
-            </button>
-            <button class="button" onclick="openGame('https://3kh0.github.io')">
-                <img alt="favicon" class="favicon" src="icons/3kh0.github.io_favicon.ico"/>
-                3kh0.github.io (ad spammy)
-            </button>
-            <button class="button" onclick="openGame('https://ubg365.github.io/hover-racer-drive/')">
-                <img alt="favicon" class="favicon" src="icons/ubg365.github.io_hover-racer-drive__favicon.ico"/>
-                Hover Racer Drive
-            </button>
-            <button class="button" onclick="openGame('https://ubg365.github.io/drift-boss/')">
-                <img alt="favicon" class="favicon" src="icons/ubg365.github.io_drift-boss__favicon.ico"/>
-                Drift Boss
-            </button>
-            <button class="button" onclick="openGame('https://ubg100.github.io/games/Madalin/index.html')">
-                Madalin Stunt Cars 2
-            </button>
-            <button class="button" onclick="openGame('https://mountain658.github.io/zbreakingthebank.html')">
-                Breaking the bank
-            </button>
-            <button class="button" onclick="openGame('https://sz-games.github.io/games/Flash.html?game=/games/henry-airship/infiltratingtheairshipgame.swf')">
-                <img alt="favicon" class="favicon" src="icons/sz-games.github.io_games_Flash.html?game=_games_henry-airship_infiltratingtheairshipgame.swf_favicon.png"/>
-                Infiltrating the airship
-            </button>
-            <button class="button" onclick="openGame('https://freeriderhd.com')">
-                <img alt="favicon" class="favicon" src="icons/freeriderhd.com_favicon.png"/>
-                Free Rider
-            </button>
-            <button class="button" onclick="openGame('https://lekug.github.io/tn6pS9dCf37xAhkJv/')">
-                Run 3
-            </button>
-            <button class="button" onclick="openGame('https://ad-freegames.github.io/flash/game/bloxorz.html')">
-                Bloxorz
-            </button>
-            <button class="button" onclick="openGame('https://htmlxm.github.io/h/drift-hunters/')">
-                Drift Hunters
-            </button>
-            <button class="button" onclick="openGame('https://venge.io/')">
-                <img alt="favicon" class="favicon" src="icons/venge.io__favicon.png"/>
-                Venge.io
-            </button>
-            <button class="button" onclick="openGame('https://unblocked-games.s3.amazonaws.com/highway-racer-pro.html')">
-                Highway Racer Pro
-            </button>
-            <button class="button" onclick="openGame('https://unblocked-games.s3.amazonaws.com/drift-hunters-2024.html')">
-                Drift Hunters 2024
-            </button>
-            <button class="button" onclick="openGame('https://jesgran.is-a.dev/webcraft/')">
-                Webcraft
-            </button>
-            <button class="button" onclick="openGame('https://studio.sandspiel.club')">
-                <img alt="favicon" class="favicon" src="icons/studio.sandspiel.club_favicon.ico"/>
-                Sandspiel Studio
-            </button>
-            <button class="button" onclick="openGame('https://www.yurk.com/games/black/')">
-                Gamble
-            </button>
-            <button class="button" onclick="openGame('https://ubg77.github.io/fix/fnaf1/')">
-                FNAF
-            </button>
-            <button class="button" onclick="openGame('https://krunker.io/')">
-                <img alt="favicon" class="favicon" src="icons/krunker.io__favicon.png"/>
-                Krunker.io
-            </button>
-            <button class="button" onclick="openGame('https://mountain658.github.io/g/tombofthemask/index.html')">
-                Tomb of the mask
-            </button>
-            <button class="button" onclick="openGame('https://www.worldguessr.com/')">
-                <img alt="favicon" class="favicon" src="icons/www.worldguessr.com__favicon.ico"/>
-                worldguessr
-            </button>
-            <button class="button" onclick="openGame('https://minecraftskins.net')">
-                <img alt="favicon" class="favicon" src="icons/minecraftskins.net_favicon.png"/>
-                MinecraftSkins.net
-            </button>
-            <button class="button" onclick="openGame('https://now.gg/games.html')">
-                <img alt="favicon" class="favicon" src="icons/now.gg_games.html_favicon.ico"/>
-                Now.gg
-            </button>
-            <button class="button" onclick="openGame('https://skindex.pro')">
-                <img alt="favicon" class="favicon" src="icons/skindex.pro_favicon.ico"/>
-                Skindex
-            </button>
-            <button class="button" onclick="openGame('https://radio.garden/')">
-                <img alt="favicon" class="favicon" src="icons/radio.garden__favicon.png"/>
-                RadioStations
-            </button>
-            <button class="button" onclick="openGame('https://v1.windows93.net/')">
-                <img alt="favicon" class="favicon" src="icons/v1.windows93.net__favicon.ico"/>
-                Windows93Emulator
-            </button>
-            <button class="button" onclick="openGame('https://www.yurk.com/games/mrbullet/')">
-                <img alt="favicon" class="favicon" src="icons/www.yurk.com_games_mrbullet__favicon.png"/>
-                Mr. Bullet
-            </button>
-            <button class="button" onclick="openGame('https://sandspiel.club')">
-                <img alt="favicon" class="favicon" src="icons/sandspiel.club_favicon.png"/>
-                Sandspiel
-            </button>
-            <button class="button" onclick="openGame('https://unblocked-games.s3.amazonaws.com/edys-car-simulator.html')">
-                Edys Car Simulator
-            </button>
-            <button class="button" onclick="openGame('https://adfree3kh0.github.io/projects/among-us/index.html')">
-                Among Us Singleplayer
-            </button>
-            <button class="button" onclick="openGame('https://winxp.vercel.app/')">
-                <img alt="favicon" class="favicon" src="icons/winxp.vercel.app__favicon.ico"/>
-                Windows XP Emulator
-            </button>
-            <button class="button" onclick="openGame('https://packager.turbowarp.org')">
-                <img alt="favicon" class="favicon" src="icons/packager.turbowarp.org_favicon.ico"/>
-                Turbowarp Packager (Download Scratch Projects)
-            </button>
-            <button class="button" onclick="openGame('https://duckmath.org/g4m3s/cluster-rush.html')">
-                Cluster Rush
-            </button>
-            <button class="button" onclick="openGame('https://selenite.cc/semag/crossyroad/index.html')">
-                Crossy Road
-            </button>
-            <button class="button" onclick="openGame('https://bloxd.io')">
-                <img alt="favicon" class="favicon" src="icons/bloxd.io_favicon.png"/>
-                Bloxd.io
-            </button>
-            <button class="button" onclick="openGame('https://cuberealm.io/')">
-                <img alt="favicon" class="favicon" src="icons/cuberealm.io__favicon.png"/>
-                CubeRealm.io
-            </button>
-            <button class="button" onclick="openGame('https://aimtrainer.io/')">
-                <img alt="favicon" class="favicon" src="icons/aimtrainer.io__favicon.ico"/>
-                Aim Trainer
-            </button>
-            <button class="button" onclick="openGame('https://www.gamearter.com/game/scrap-metal/')">
-                Scrap Metal 1
-            </button>
-            <button class="button" onclick="openGame('https://www.gamearter.com/game/scrap-metal-2/')">
-                Scrap Metal 2
-            </button>
-            <button class="button" onclick="openGame('https://adfree3kh0.github.io/projects/scrapmetal/index.html')">
-                Scrap Metal 3
-            </button>
-            <button class="button" onclick="openGame('https://www.gamearter.com/game/scrap-metal-4/')">
-                Scrap Metal 4
-            </button>
-            <button class="button" onclick="openGame('https://www.gamearter.com/game/scrap-metal-5/')">
-                Scrap Metal 5
-            </button>
-            <button class="button" onclick="openGame('https://www.gamearter.com/game/scrap-metal-6/')">
-                Scrap Metal 6
-            </button>
-            <button class="button" onclick="openGame('https://www.gamearter.com/game/games')">
-                <img alt="favicon" class="favicon" src="icons/www.gamearter.com_game_games_favicon.png"/>
-                GameArter
-            </button>
-            <button class="button" onclick="openGame('https://unblocked-games.s3.amazonaws.com/index.html')">
-                FreezeNova
-            </button>
-            <button class="button" onclick="openGame('https://selenite.cc/semag/gdlite/index.html')">
-                Geometry Dash Lite
-            </button>
-            <button class="button" onclick="openGame('https://selenite.cc/semag/fnaf2/index.html')">
-                FNAF 2
-            </button>
-            <button class="button" onclick="openGame('https://selenite.cc/semag/fnaf3/index.html')">
-                FNAF 3
-            </button>
-            <button class="button" onclick="openGame('https://selenite.cc/semag/fnaf4/index.html')">
-                FNAF 4
-            </button>
-            <button class="button" onclick="openGame('https://selenite.cc/semag/eaglercraft/index.html')">
-                Selenite Minecraft
-            </button>
-            <button class="button" onclick="openGame('https://littlebigsnake.com')">
-                <img alt="favicon" class="favicon" src="icons/littlebigsnake.com_favicon.png"/>
-                LittleBigSnake
-            </button>
-            <button class="button" onclick="openGame('https://surviv.io')">
-                <img alt="favicon" class="favicon" src="icons/surviv.io_favicon.png"/>
-                Surviv.io
-            </button>
-            <button class="button" onclick="openGame('https://unblocked-games.s3.amazonaws.com/spacebar-clicker.html')">
-                Spacebar Clicker
-            </button>
-            <button class="button" onclick="openGame('https://deadshot.io')">
-                <img alt="favicon" class="favicon" src="icons/deadshot.io_favicon.png"/>
-                Deadshot.io
-            </button>
-            <button class="button" onclick="openGame('https://elucidation.github.io/ClickerJs/')">
-                Clicker
-            </button>
-            <button class="button" onclick="openGame('https://smashkarts.io')">
-                <img alt="favicon" class="favicon" src="icons/smashkarts.io_favicon.png"/>
-                Smashkarts.io
-            </button>
-            <button class="button" onclick="openGame('https://www.yurk.com/games/pixelforce/')">
-                <img alt="favicon" class="favicon" src="icons/www.yurk.com_games_pixelforce__favicon.ico"/>
-                Pixel Force
-            </button>
-            <button class="button" onclick="openGame('https://www.yurk.com/games/happyglass/')">
-                Happy Glass
-            </button>
-            <button class="button" onclick="openGame('https://www.yurk.com/games/stickrunning/')">
-                <img alt="favicon" class="favicon" src="icons/www.yurk.com_games_stickrunning__favicon.png"/>
-                Stick Running
-            </button>
-            <button class="button" onclick="openGame('https://www.yurk.com/games/happyfilledglass/')">
-                <img alt="favicon" class="favicon" src="icons/www.yurk.com_games_happyfilledglass__favicon.png"/>
-                Happy Filled Glass
-            </button>
-            <button class="button" onclick="openGame('https://d3rtzzzsiu7gdr.cloudfront.net/settings.html')">
-                Hypackel Games
-            </button>
-            <button class="button" onclick="openGame('https://d21u3ic0kp9e91.cloudfront.net/elasticman/0/index.html')">
-                Elastic Man
-            </button>
-            <button class="button" onclick="openGame('https://ubg44.github.io/TunnelRush/')">
-                <img alt="favicon" class="favicon" src="icons/ubg44.github.io_TunnelRush__favicon.ico"/>
-                Tunnel Rush
-            </button>
-            <button class="button" onclick="openGame('https://d3rtzzzsiu7gdr.cloudfront.net/files/cookieclicker/game/index.html')">
-                Cookie Clicker 2024 (Click link)
-            </button>
-            <button class="button" onclick="openGame('https://d3rtzzzsiu7gdr.cloudfront.net/gameplayer/index.html?Interactive%20Buddy')">
-                Interactive Buddy
-            </button>
-            <button class="button" onclick="openGame('https://d3rtzzzsiu7gdr.cloudfront.net/files/baldisbasics/index.html')">
-                Baldis Basics
-            </button>
-            <button class="button" onclick="openGame('https://d3rtzzzsiu7gdr.cloudfront.net/files/minecraft-classic/index.html')">
-                Minecraft Classic
-            </button>
-            <button class="button" onclick="openGame('https://d3rtzzzsiu7gdr.cloudfront.net/files/AngryBirdsWebGL/index.html')">
-                Angry Birds
-            </button>
-            <button class="button" onclick="openGame('https://d3rtzzzsiu7gdr.cloudfront.net/gameplayer/index.html?Eaglercraft%20(MC)#')">
-                Minecraft 1.8
-            </button>
-            <button class="button" onclick="openGame('https://d3rtzzzsiu7gdr.cloudfront.net/files/projects/precision-client/index.html')">
-                Precision Client Eagler
-            </button>
-            <button class="button" onclick="openGame('https://2048game.com/')">
-                <img alt="favicon" class="favicon" src="icons/2048game.com__favicon.ico"/>
-                2048
-            </button>
-            <button class="button" onclick="openGame('https://d3rtzzzsiu7gdr.cloudfront.net/files/flappybird/index.html')">
-                Flappy Bird
-            </button>
-            <button class="button" onclick="openGame('https://d3rtzzzsiu7gdr.cloudfront.net/gameplayer/index.html?1v1.LOL%20[Needs%20Internet]')">
-                1v1.lol
-            </button>
-            <button class="button" onclick="openGame('https://win11.blueedge.me')">
-                <img alt="favicon" class="favicon" src="icons/win11.blueedge.me_favicon.ico"/>
-                Win11 in React
-            </button>
-            <button class="button" onclick="openGame('https://hypackel.com')">
-                <img alt="favicon" class="favicon" src="icons/hypackel.com_favicon.png"/>
-                Hypackel 2
-            </button>
-            <button class="button" onclick="openGame('https://hypackel.github.io')">
-                <img alt="favicon" class="favicon" src="icons/hypackel.github.io_favicon.ico"/>
-                Hypackel 3
-            </button>
-            <button class="button" onclick="openGame('https://1v1.lol')">
-                <img alt="favicon" class="favicon" src="icons/1v1.lol_favicon.png"/>
-                1v1.lol Fortnite - Play at home
-            </button>
-            <button class="button" onclick="openGame('https://archive.org/details/tiq2_swf')">
-                Impossible Quiz 2
-            </button>
-            <button class="button" onclick="openGame('https://web.archive.org/web/20241112154118/now.gg')">
-                <img alt="favicon" class="favicon" src="icons/web.archive.org_web_20241112154118_now.gg_favicon.ico"/>
-                Now.gg Method 2
-            </button>
-            <button class="button" onclick="openGame('https://web.archive.org')">
-                <img alt="favicon" class="favicon" src="icons/web.archive.org_web_20241112154118_now.gg_favicon.ico"/>
-                Web Archive
-            </button>
-            <button class="button" onclick="openGame('https://barneycompiler.github.io/AstraClientEagler/javascript')">
-                Astra Client Eagler
-            </button>
-            <button class="button" onclick="openGame('https://tetris.com/play-tetris')">
-                <img alt="favicon" class="favicon" src="icons/tetris.com_play-tetris_favicon.png"/>
-                Tetris
-            </button>
-            <button class="button" onclick="openGame('https://lingojam.com/GlitchTextGenerator')">
-                Glitch Text Generator
-            </button>
-            </button>
-            <button class="button" onclick="openGame('https://www.yurk.com/games/stickmanswing')">
-                <img alt="favicon" class="favicon" src="icons/www.yurk.com_games_stickmanswing_favicon.ico"/>
-                Stickman Swing
-            </button>
-            <button class="button" onclick="openGame('https://elgoog.im')">
-                <img alt="favicon" class="favicon" src="icons/elgoog.im_favicon.png"/>
-                Google Easter Egg Games
-            </button>
-            <button class="button" onclick="openGame('https://duckmath.org/index.html')">
-                Duck Math Games
-            </button>
-            <button class="button" onclick="openGame('https://www.chilltrax.com/')">
-                <img alt="favicon" class="favicon" src="icons/www.chilltrax.com__favicon.png"/>
-                Chill Radio
-            </button>
-            <button class="button" onclick="openGame('https://beinternetawesome.withgoogle.com/en_us/interland/landing/tower-of-treasure')">
-                <img alt="favicon" class="favicon" src="icons/beinternetawesome.withgoogle.com_en_us_interland_landing_tower-of-treasure_favicon.png"/>
-                Tower of Treasure
-            </button>
-            <button class="button" onclick="openGame('https://lingojam.com/FancyTextGenerator')">
-                Fancy Text Generator
-            </button>
-            <button class="button" onclick="openGame('https://yurk.com')">
-                <img alt="favicon" class="favicon" src="icons/yurk.com_favicon.png"/>
-                Yurk.com
-            </button>
-            <button class="button" onclick="openGame('https://html.cafe/xf91164ad')">
-                <img alt="favicon" class="favicon" src="icons/html.cafe_xf91164ad_favicon.png"/>
-                Australian Man Website
-            </button>
-            <button class="button" onclick="openGame('https://html.cafe/x4922b615')">
-                SigmaFart
-            </button>
-            <button class="button" onclick="openGame('https://d3rtzzzsiu7gdr.cloudfront.net/play/index.html?Bottle%20Flip%203D')">
-                Bottle Flip 3D
-            </button>
-            <button class="button" onclick="openGame('https://friv.com')">
-                <img alt="favicon" class="favicon" src="icons/friv.com_favicon.png"/>
-                Friv.com
-            </button>
-            <button class="button" onclick="openGame('https://gulper.io/')">
-                <img alt="favicon" class="favicon" src="icons/gulper.io__favicon.png"/>
-                Slither.io Ripoff
-            </button>
-            <button class="button" onclick="openGame('https://infinite-craft.com/infinite-craft/')">
-                Infinite Craft
-            </button>
-            <button class="button" onclick="openGame('https://igroutka.ru/loader/game/26471/')">
-                Baldis Basics Method 2
-            </button>
-            <button class="button" onclick="openGame('https://gnhustgames.github.io/wbwwb/')">
-                We Become what we Behold
-            </button>
-            <button class="button" onclick="openGame('https://servers.eaglercraft.com/')">
-                <img alt="favicon" class="favicon" src="icons/servers.eaglercraft.com__favicon.ico"/>
-                Eaglercraft Servers
-            </button>
-            <button class="button" onclick="openGame('https://htmlxm.github.io/h7/dinosaur-game/')">
-                Chrome Dino
-            </button>
-            <button class="button" onclick="openGame('https://turbowarp.org/389464290/embed?autoplay&addons=remove-curved-stage-border,pause,gamepad')">
-                <img alt="favicon" class="favicon" src="icons/turbowarp.org_389464290_embed?autoplay&addons=remove-curved-stage-border,pause,gamepad_favicon.ico"/>
-                Getting over it (Scratch)
-            </button>
-            <button class="button" onclick="openGame('https://player.work/1v1lol/index.html')">
-                1v1.lol Method 3
-            </button>
-            <button class="button" onclick="openGame('https://html.cafe/gallery')">
-                HTML.cafe Gallery
-            </button>
-            <button class="button" onclick="openGame('https://eaglercraftx1-8.github.io/')">
-                <img alt="favicon" class="favicon" src="icons/eaglercraftx1-8.github.io__favicon.png"/>
-                Eaglercraft Clients
-            </button>
-            <button class="button" onclick="openGame('http://slither.com/io')">
-                <img alt="favicon" class="favicon" src="icons/slither.com_io_favicon.png"/>
-                Slither.io
-            </button>
-            <button class="button" onclick="openGame('https://easyfun.gg')">
-                <img alt="favicon" class="favicon" src="icons/easyfun.gg_favicon.ico"/>
-                Easyfun.gg
-            </button>
-            <button class="button" onclick="openGame('https://mcraft.fun')">
-                <img alt="favicon" class="favicon" src="icons/mcraft.fun_favicon.png"/>
-                Minecraft Java Edition
-            </button>
-            <button class="button" onclick="openGame('https://html.cafe/xb2c91b5a')">
-                Mood Tracker
-            </button>
-            <button class="button" onclick="openGame('https://html.cafe/x63aefeaa')">
-                Guess The Number Game
-            </button>
-            <button class="button" onclick="openGame('https://spacenerd24.github.io/Online-HTML-Viewer/')">
-                HTML Editor
-            </button>
-            <button class="button" onclick="openGame('https://selenite-copy.pages.dev')">
-                <img alt="favicon" class="favicon" src="icons/selenite-copy.pages.dev_favicon.ico"/>
-                Selenite Copy
-            </button>
-        </div>
+        <button class="button" onclick="openGame('https://404gamesgithub.github.io/1on1soccer/')">
+        1 on 1 Soccer
+    </button>
+    <button class="button" onclick="openGame('https://neal.fun/infinite-craft/')">
+        Neal.Fun Infinite Craft
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/1v1lol/')">
+        1v1.lol
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/offBrandFortnite/')">
+        Off Brand Fortnite
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/achieveunlocked/')">
+        Achievement Unlocked
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/achieveunlocked2/')">
+        Achievement Unlocked 2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/adarkroom/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_adarkroom__favicon.ico"/>
+        A Dark Room
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/adventure-capitalist/')">
+        Adventure Capitalist
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/ageofwar/')">
+        Age Of War
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/amazing-rope-police/')">
+        Amazing Rope Police
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/amongus/')">
+        Among Us
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/avalanche/')">
+        Avalanche
+    </button>
+    <button class="button" onclick="openGame('https://medv.io/bit-planes/?mode=swarm')">
+        Bit Planes
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/badicecream2/')">
+        Bad Ice Cream 2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/badicecream3/')">
+        Bad Ice Cream 3
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/badocecream/')">
+        Bad Ice Cream
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/badpiggies/')">
+        Bad Piggies
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/basketbros/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_basketbros__favicon.png"/>
+        Basket Bros
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/basketball-stars/')">
+        Basketball Stars
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/bloxors/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_bloxors__favicon.ico"/>
+        Bloxors
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/bloodtournament/')">
+        Blood Tournament
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/boxingphysics2/')">
+        Boxing Physics 2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/championisland/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_championisland__favicon.ico"/>
+        Champion Island
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/chess/')">
+        Chess
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/circloo/')">
+        Circloo
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/codz/')">
+        Cod Zombies (Multiplayer!)
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/cuttherope/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_cuttherope__favicon.ico"/>
+        Cut The Rope
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/cuttherope-holiday/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_cuttherope-holiday__favicon.ico"/>
+        Cut The Rope Holiday
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/duck-life-1/')">
+        Duck Life
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/ducklife2/')">
+        Duck Life 2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/ducklife4/')">
+        Duck Life 4
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/eggycar/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_eggycar__favicon.png"/>
+        Eggy Car
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/fruit-ninja/')">
+        Fruit Ninja
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/funnyshooter2/')">
+        Funny Shooter 2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/fnf/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_fnf__favicon.png"/>
+        FNF
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/google-snake/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_google-snake__favicon.png"/>
+        Google Snake
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/hole.io/')">
+        Hole.io
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/hypercars/')">
+        HyperCars
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/jetpack/')">
+        Jetpack Joyride
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/justfall/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_justfall__favicon.png"/>
+        Just Fall
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/Slope/')">
+        Slope
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/keylimba/')">
+        KeyLimba
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/merge-round-racers/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_merge-round-racers__favicon.png"/>
+        Merge Round Racers
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/monkeymart/')">
+        Monkey Mart
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/motox3m-2/')">
+        Motox3m 2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/motox3mpoolparty/')">
+        Motox3m Summer
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/motox3mspookyland/')">
+        Motox3m Halloween
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/motox3mwinter/')">
+        Motox3m Winter
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/paperio-2/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_paperio-2__favicon.png"/>
+        Paper.io 2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/paperio2/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_paperio2__favicon.png"/>
+        PaperIo 2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/papas-pizzaria/')">
+        Papa's Pizzaria
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/papasb/')">
+        Papa's Burgeria
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/polytrack/')">
+        Polytrack
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/retrob/')">
+        Retro Bowl
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/ragdoll-archers/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_ragdoll-archers__favicon.png"/>
+        Ragdoll Archers
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/racing-limits/')">
+        Racing Limits
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/rocket-league/')">
+        Rocket League
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/rooftop-snipers111/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_rooftop-snipers111__favicon.png"/>
+        Rooftop Snipers
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/slow-roads/')">
+        Slow Roads
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/soccer-random/')">
+        Soccer Random
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/stickman/')">
+        Stickman Hook
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/stuntcars/')">
+        Madalin Stunt Cars
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/super-star-car/')">
+        Super Star Cars
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/sushi-unroll/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_sushi-unroll__favicon.png"/>
+        Sushi Roll
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/subwaysurfers/')">
+        Subway Surfers
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/tanuki-sunset/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_tanuki-sunset__favicon.png"/>
+        Tanuki Sunset
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/tag/')">
+        Tag
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/tunnel-rush/')">
+        Tunnel Rush
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/temple-run-2/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_temple-run-2__favicon.png"/>
+        Temple Run 2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/temple-run-22/')">
+        Temple Run 2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/tiny-fishing1/')">
+        Tiny Fishing
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/volley-random/')">
+        Volley Random
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/xx142-b2exe/')">
+        XX142-B2EXE
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/hilldraw/')">
+        Hilldraw
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/glass-city/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_glass-city__favicon.ico"/>
+        Glass City
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/fortcraft/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_fortcraft__favicon.ico"/>
+        FortCraft
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/flappyb/')">
+        Flappybird
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/fireboyandwatergirl/')">
+        Fireboy and Watergirl
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/drift-hunters/')">
+        Drift Hunters
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/dreader/')">
+        Dreader
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/deathrun/')">
+        Deathrun
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/crossy/')">
+        Crossyroad
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/cars-simulator/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_cars-simulator__favicon.ico"/>
+        Cars Simulator
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/breakoid/')">
+        Breakoid
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/breaklock/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_breaklock__favicon.ico"/>
+        Breaklock
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/boxing-random/')">
+        Boxing Random
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/bombhopper/')">
+        Bombhopper
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/baconmaydie/')">
+        Bacon May Die
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/bigredbutton/')">
+        Big Red Button
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/burgerandfrights/')">
+        Burger and Frights
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/basketbros-io/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_basketbros-io__favicon.png"/>
+        BasketBros.io
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/backrooms/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_backrooms__favicon.png"/>
+        Backrooms
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/aquapark-slides/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_aquapark-slides__favicon.png"/>
+        Aquapark Slides
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/vex3/')">
+        Vex 3
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/vex44/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_vex44__favicon.png"/>
+        Vex 4
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/vex55/')">
+        Vex 5
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/vex6/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_vex6__favicon.png"/>
+        Vex 6
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/vex7/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_vex7__favicon.png"/>
+        Vex 7
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/worlde1/')">
+        Worlde
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/dadish2/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_dadish2__favicon.png"/>
+        Dadish 2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/deal/')">
+        Deal
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/death-run-3d/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_death-run-3d__favicon.ico"/>
+        Death Run 3D
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/doom/')">
+        Doom
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/drag/')">
+        Drag
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/dragonballdevolution/')">
+        Dragonball Devolution
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/drift-boss11/')">
+        Drift Boss
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/drifthunters/')">
+        Drift Hunters
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/ducklife1-1/')">
+        Duck Life
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/ducklife3/')">
+        Duck Life 3
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/ducklife4-4/')">
+        Duck Life 4
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/ducklife5/')">
+        Duck Life 5
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/ducklife6/')">
+        Duck Life 6
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/emulatorjs/')">
+        Emulator JS
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/escapingtheprison/')">
+        Escaping The Prison
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/factoryballs/')">
+        Factory Balls
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/factoryballsforever/')">
+        Factory Balls Forever
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/fancypantsadventures/')">
+        Fancy Pants Adventures
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/fancypantsadventures2/')">
+        Fancy Pants Adventures 2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/fireboywatergirl/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_fireboywatergirl__favicon.png"/>
+        Fireboy and Watergirl
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/fireboywatergirl2/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_fireboywatergirl2__favicon.png"/>
+        Fireboy and Watergirl 2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/fireboywatergirl3/')">
+        Fireboy and Watergirl 3
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/fleeingthecomplex/')">
+        Fleeing The Complex
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/flippyfish/')">
+        Flippy Fish
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/fluidsim/')">
+        Fluid Simulator
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/funnyballgame/')">
+        Funny Ball Game
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/funnyshooter/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_funnyshooter__favicon.ico"/>
+        Funny Shooter
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/gba/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_gba__favicon.png"/>
+        GBA
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/getawayshooter/')">
+        Getaway Shooter
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/golddiggerfrvr/')">
+        Gold Digger FRVR
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/guiltygear/')">
+        Guilty Gear
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/gunmayhem/')">
+        Gun Mayhem
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/gunmayhem2/')">
+        Gun Mayhem 2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/gunmayhemredux/')">
+        Gun Mayhem Redux
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/halloween2016/')">
+        Hallloween 2016
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/happywheels/')">
+        Happy Wheels
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/helixjump/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_helixjump__favicon.png"/>
+        Helix Jump
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/hexgl/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_hexgl__favicon.png"/>
+        Hex GL
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/hextris/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_hextris__favicon.png"/>
+        Hextris
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/hillclimbracing2/')">
+        Hill Climb Racing 2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/holeio/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_holeio__favicon.ico"/>
+        Hole.io
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/idlebreakout/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_idlebreakout__favicon.png"/>
+        Idle Breakout
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/infinite-craft-unblocked/')">
+        Infinite Craft
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/infiltratingtheairship/')">
+        Infiltrating The Airship
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/knifehit/')">
+        Knife Hit
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/lasthorizon/')">
+        Last Horizon
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/lazyjump3d/')">
+        Lazy Jump 3D
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/learntofly2/')">
+        Learn To Fly 2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/learntoflyidle/')">
+        Learn To Fly Idle
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/linerider/')">
+        Line Rider
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/littlealchemy/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_littlealchemy__favicon.png"/>
+        Little Alchemy
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/lowsadventures2/')">
+        Lows Adventures 2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/mario/')">
+        Mario
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/metroidzeromission/')">
+        Metroid Zero Mission
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/minecraft-tower-defence-2/')">
+        Crafter Tower Defence 2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/minesweeper/')">
+        Minesweeper
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/monstertracks/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_monstertracks__favicon.ico"/>
+        Monstertracks
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/ngon/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_ngon__favicon.ico"/>
+        Ngon
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/ocarinaoftime/')">
+        The Legend Of Zelda: Ocarina Of Time
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/offlineparadise/')">
+        Offline Paradise
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/osu/')">
+        Osu!
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/osumainia/')">
+        Osu! Mania
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/pacman/')">
+        PacMan
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/pandemic/')">
+        Pandemic
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/pandemic2/')">
+        Pandemic2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/papasfreezeria/')">
+        Papa's Freezeria
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/paperio/')">
+        Paper.io
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/pizzatower/')">
+        Pizza Tower
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/pokemon/')">
+        Pokemon
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/pong/')">
+        Pong
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/pool/')">
+        Pool
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/poom/')">
+        Poom
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/redball3/')">
+        Red Ball 3
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/redball4/')">
+        Red Ball 4
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/redball4vol2/')">
+        Red Ball 4 Volume 2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/redball4vol3/')">
+        Red Ball 4 Volume 3
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/zombocalypse/')">
+        Zombocalypse
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/xp/')">
+        Windows XP
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/worldshardestgame/')">
+        Worlds Hardest Game
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/worldshardestgame2/')">
+        Worlds Hardest Game 2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/wordlebot/')">
+        Worlde Bot
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/watermelongame/')">
+        Watermelon Game
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/wallsmash/')">
+        Wallsmash
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/universal-paperclips/')">
+        Universal Paperclips
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/turbowarp/')">
+        Turbowarp
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/tube-jumpers/')">
+        Tube Jumpers
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/tron/')">
+        Tron
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/timeshooter3/')">
+        Time Shooter 3
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/timeshooter2/')">
+        Time Shooter 2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/timeshooter1/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_timeshooter1__favicon.ico"/>
+        Time Shooter
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/thisistheonlylevel2/')">
+        This Is The Only Level 2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/thisistheonlylevel/')">
+        This Is The Only Level
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/thritydollarwebsite/')">
+        Thirty Dollar Website
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/thereisnogame/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_thereisnogame__favicon.png"/>
+        There Is No Game
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/theimpossiblequiz/')">
+        The Impossible Quiz
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/theimpossiblegame/')">
+        The Impossible Game
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/thefinalearth2/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_thefinalearth2__favicon.png"/>
+        The Final Earth 2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/tabs/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_tabs__favicon.ico"/>
+        TABS
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/supersmashflash/')">
+        Super Smash Brothers Flash
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/supersmashbros/')">
+        Super Smash Brothers
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/supermeatboy/')">
+        Super Meat Boy
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/stickmangolf/')">
+        Stickman Golf
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/retrobowlcollege/')">
+        Retro Bowl College
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/riddleschool/')">
+        Riddle School
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/riddleschool2/')">
+        Riddle School 2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/riddleschool3/')">
+        Riddle School 3
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/riddleschool4/')">
+        Riddle School 4
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/riddleschool5/')">
+        Riddle School 5
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/risehigher/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_risehigher__favicon.png"/>
+        Rise Higher
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/rooftopsnipers2/')">
+        Rooftop Snipers 2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/run/')">
+        Run
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/run2/')">
+        Run 2
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/russiancardriver/')">
+        Russian Car Driver
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/sand/')">
+        Sand
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/sandtrix/')">
+        Sandtrix
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/shadow/')">
+        Shadow
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/skibiditoilet/')">
+        Skibidi Toilet
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/skibiditoiletattack/')">
+        Skibidi Toilet Attack
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/slope3/')">
+        Slope 3
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/snake/')">
+        Snake
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/snow/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_snow__favicon.ico"/>
+        Snow
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/snowrider3d/')">
+        Snow Rider 3D
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/solitare/')">
+        Solitare
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/soundboard/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_soundboard__favicon.png"/>
+        Soundboard
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/space/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_space__favicon.ico"/>
+        Space
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/spankthemonkey/')">
+        Spank The Monkey
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/sprinter/')">
+        Sprinter
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/stack1/')">
+        Stack
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/stealingthediamond/')">
+        Stealing The Diamond
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/stickmanboost/')">
+        <img alt="favicon" class="favicon" src="icons/404gamesgithub.github.io_stickmanboost__favicon.png"/>
+        Stickman Boost
+    </button>
+    <button class="button" onclick="openGame('https://404gamesgithub.github.io/stickmanclimb/')">
+        Stickman Climb
+    </button>
+    <button class="button" onclick="openGame('https://skribbl.io')">
+        <img alt="favicon" class="favicon" src="icons/skribbl.io_favicon.png"/>
+        Skribbl.io
+    </button>
+    <button class="button" onclick="openGame('https://eaglercraft.glitch.me/')">
+        Minecraft (1.5)
+    </button>
+    <button class="button" onclick="openGame('https://eaglercraft-archive.github.io/Koneclient-1.8-web/')">
+        <img alt="favicon" class="favicon" src="icons/eaglercraft-archive.github.io_Koneclient-1.8-web__favicon.ico"/>
+        Minecraft (1.8)
+    </button>
+    <button class="button" onclick="openGame('https://reslauncher4.vercel.app')">
+        <img alt="favicon" class="favicon" src="icons/reslauncher4.vercel.app_favicon.png"/>
+        Resent Client Eagler (1.8)
+    </button>
+    <button class="button" onclick="openGame('https://dfs3rzq44v6as.cloudfront.net/?frame=fullscreen/#/lessons/964c4358-60a7-4121-908e-63f6ae6e5ef0')">
+        <img alt="favicon" class="favicon" src="icons/dfs3rzq44v6as.cloudfront.net_?frame=fullscreen_#_lessons_964c4358-60a7-4121-908e-63f6ae6e5ef0_favicon.png"/>
+        Eaglercraft (1.20)
+    </button>
+    <button class="button" onclick="openGame('https://html.cafe/x7922b580')">
+        Eaglercraft Versions & Clients
+    </button>
+    <button class="button" onclick="openGame('https://www.easyfun.gg/games/roblox.html')">
+        Roblox (Easyfun.gg)
+    </button>
+    <button class="button" onclick="openGame('https://dashboard-cq4z.onrender.com/?ng_ifp_partner=skool')">
+        Roblox (Now.gg)
+    </button>
+    <button class="button" onclick="openGame('https://dfs3rzq44v6as.cloudfront.net/?frame=fullscreen/#/lessons/550673cd-2d7e-437e-ab86-baa249b52dd0')">
+        <img alt="favicon" class="favicon" src="icons/dfs3rzq44v6as.cloudfront.net_?frame=fullscreen_#_lessons_550673cd-2d7e-437e-ab86-baa249b52dd0_favicon.png"/>
+        Roblox (Now.gg 2)
+    </button>
+    <button class="button" onclick="openGame('https://nowgg.lol/')">
+        <img alt="favicon" class="favicon" src="icons/nowgg.lol__favicon.gif"/>
+        Roblox (Now.gg 3)
+    </button>
+    <button class="button" onclick="openGame('https://pathetic-roblox-main.vercel.app/')">
+        <img alt="favicon" class="favicon" src="icons/pathetic-roblox-main.vercel.app__favicon.png"/>
+        Roblox (Now.gg 4)
+    </button>
+    <button class="button" onclick="openGame('https://html.cafe/x8bcb5934')">
+        <img alt="favicon" class="favicon" src="icons/html.cafe_x8bcb5934_favicon.ico"/>
+        Roblox (Now.gg 5)
+    </button>
+    <button class="button" onclick="openGame('https://dfs3rzq44v6as.cloudfront.net')">
+        <img alt="favicon" class="favicon" src="icons/dfs3rzq44v6as.cloudfront.net_#_prxy_favicon.png"/>
+        Tortilla Games
+    </button>
+    <button class="button" onclick="openGame('https://dfs3rzq44v6as.cloudfront.net/#/prxy')">
+        <img alt="favicon" class="favicon" src="icons/dfs3rzq44v6as.cloudfront.net_#_prxy_favicon.png"/>
+        Ultraviolet
+    </button>
+    <button class="button" onclick="openGame('https://g.deev.is/fnaw')">
+        <img alt="favicon" class="favicon" src="icons/g.deev.is_fnaw_favicon.ico"/>
+        Five Nights At Winston's
+    </button>
+    <button class="button" onclick="openGame('https://neal.fun')">
+        Neal.fun
+    </button>
+    <button class="button" onclick="openGame('https://dddavit.github.io/subway/')">
+        Subway Surfers
+    </button>
+    <button class="button" onclick="openGame('https://mathadventure1.github.io/slope/slope/index.html')">
+        Slope
+    </button>
+    <button class="button" onclick="openGame('https://d3rtzzzsiu7gdr.cloudfront.net/gameplayer/index.html?Slope%202')">
+        Slope 2
+    </button>
+    <button class="button" onclick="openGame('https://slope3.com/')">
+        <img alt="favicon" class="favicon" src="icons/slope3.com__favicon.png"/>
+        Slope 3
+    </button>
+    <button class="button" onclick="openGame('https://eli-schwartz.github.io/cookieclicker/')">
+        Cookie Clicker
+    </button>
+    <button class="button" onclick="openGame('https://ubg365.github.io/drive-mad/play.html')">
+        Drive Mad
+    </button>
+    <button class="button" onclick="openGame('https://play.fancade.com/63BA239C20C40BF3')">
+        Drive Mad Mod
+    </button>
+    <button class="button" onclick="openGame('https://ubg365.github.io/bitlife-life-simulator/play.html')">
+        BitLife
+    </button>
+    <button class="button" onclick="openGame('https://zty.pe')">
+        <img alt="favicon" class="favicon" src="icons/zty.pe_favicon.png"/>
+        Ztype
+    </button>
+    <button class="button" onclick="openGame('https://3kh0.github.io')">
+        <img alt="favicon" class="favicon" src="icons/3kh0.github.io_favicon.ico"/>
+        3kh0.github.io (ad spammy)
+    </button>
+    <button class="button" onclick="openGame('https://ubg365.github.io/hover-racer-drive/')">
+        <img alt="favicon" class="favicon" src="icons/ubg365.github.io_hover-racer-drive__favicon.ico"/>
+        Hover Racer Drive
+    </button>
+    <button class="button" onclick="openGame('https://ubg365.github.io/drift-boss/')">
+        <img alt="favicon" class="favicon" src="icons/ubg365.github.io_drift-boss__favicon.ico"/>
+        Drift Boss
+    </button>
+    <button class="button" onclick="openGame('https://ubg100.github.io/games/Madalin/index.html')">
+        Madalin Stunt Cars 2
+    </button>
+    <button class="button" onclick="openGame('https://mountain658.github.io/zbreakingthebank.html')">
+        Breaking the bank
+    </button>
+    <button class="button" onclick="openGame('https://sz-games.github.io/games/Flash.html?game=/games/henry-airship/infiltratingtheairshipgame.swf')">
+        <img alt="favicon" class="favicon" src="icons/sz-games.github.io_games_Flash.html?game=_games_henry-airship_infiltratingtheairshipgame.swf_favicon.png"/>
+        Infiltrating the airship
+    </button>
+    <button class="button" onclick="openGame('https://freeriderhd.com')">
+        <img alt="favicon" class="favicon" src="icons/freeriderhd.com_favicon.png"/>
+        Free Rider
+    </button>
+    <button class="button" onclick="openGame('https://lekug.github.io/tn6pS9dCf37xAhkJv/')">
+        Run 3
+    </button>
+    <button class="button" onclick="openGame('https://ad-freegames.github.io/flash/game/bloxorz.html')">
+        Bloxorz
+    </button>
+    <button class="button" onclick="openGame('https://htmlxm.github.io/h/drift-hunters/')">
+        Drift Hunters
+    </button>
+    <button class="button" onclick="openGame('https://venge.io/')">
+        <img alt="favicon" class="favicon" src="icons/venge.io__favicon.png"/>
+        Venge.io
+    </button>
+    <button class="button" onclick="openGame('https://unblocked-games.s3.amazonaws.com/highway-racer-pro.html')">
+        Highway Racer Pro
+    </button>
+    <button class="button" onclick="openGame('https://unblocked-games.s3.amazonaws.com/drift-hunters-2024.html')">
+        Drift Hunters 2024
+    </button>
+    <button class="button" onclick="openGame('https://jesgran.is-a.dev/webcraft/')">
+        Webcraft
+    </button>
+    <button class="button" onclick="openGame('https://studio.sandspiel.club')">
+        <img alt="favicon" class="favicon" src="icons/studio.sandspiel.club_favicon.ico"/>
+        Sandspiel Studio
+    </button>
+    <button class="button" onclick="openGame('https://www.yurk.com/games/black/')">
+        Gamble
+    </button>
+    <button class="button" onclick="openGame('https://ubg77.github.io/fix/fnaf1/')">
+        FNAF
+    </button>
+    <button class="button" onclick="openGame('https://krunker.io/')">
+        <img alt="favicon" class="favicon" src="icons/krunker.io__favicon.png"/>
+        Krunker.io
+    </button>
+    <button class="button" onclick="openGame('https://mountain658.github.io/g/tombofthemask/index.html')">
+        Tomb of the mask
+    </button>
+    <button class="button" onclick="openGame('https://www.worldguessr.com/')">
+        <img alt="favicon" class="favicon" src="icons/www.worldguessr.com__favicon.ico"/>
+        worldguessr
+    </button>
+    <button class="button" onclick="openGame('https://minecraftskins.net')">
+        <img alt="favicon" class="favicon" src="icons/minecraftskins.net_favicon.png"/>
+        MinecraftSkins.net
+    </button>
+    <button class="button" onclick="openGame('https://now.gg/games.html')">
+        <img alt="favicon" class="favicon" src="icons/now.gg_games.html_favicon.ico"/>
+        Now.gg
+    </button>
+    <button class="button" onclick="openGame('https://skindex.pro')">
+        <img alt="favicon" class="favicon" src="icons/skindex.pro_favicon.ico"/>
+        Skindex
+    </button>
+    <button class="button" onclick="openGame('https://radio.garden/')">
+        <img alt="favicon" class="favicon" src="icons/radio.garden__favicon.png"/>
+        RadioStations
+    </button>
+    <button class="button" onclick="openGame('https://v1.windows93.net/')">
+        <img alt="favicon" class="favicon" src="icons/v1.windows93.net__favicon.ico"/>
+        Windows93Emulator
+    </button>
+    <button class="button" onclick="openGame('https://www.yurk.com/games/mrbullet/')">
+        <img alt="favicon" class="favicon" src="icons/www.yurk.com_games_mrbullet__favicon.png"/>
+        Mr. Bullet
+    </button>
+    <button class="button" onclick="openGame('https://sandspiel.club')">
+        <img alt="favicon" class="favicon" src="icons/sandspiel.club_favicon.png"/>
+        Sandspiel
+    </button>
+    <button class="button" onclick="openGame('https://unblocked-games.s3.amazonaws.com/edys-car-simulator.html')">
+        Edys Car Simulator
+    </button>
+    <button class="button" onclick="openGame('https://adfree3kh0.github.io/projects/among-us/index.html')">
+        Among Us Singleplayer
+    </button>
+    <button class="button" onclick="openGame('https://winxp.vercel.app/')">
+        <img alt="favicon" class="favicon" src="icons/winxp.vercel.app__favicon.ico"/>
+        Windows XP Emulator
+    </button>
+    <button class="button" onclick="openGame('https://packager.turbowarp.org')">
+        <img alt="favicon" class="favicon" src="icons/packager.turbowarp.org_favicon.ico"/>
+        Turbowarp Packager (Download Scratch Projects)
+    </button>
+    <button class="button" onclick="openGame('https://duckmath.org/g4m3s/cluster-rush.html')">
+        Cluster Rush
+    </button>
+    <button class="button" onclick="openGame('https://selenite.cc/semag/crossyroad/index.html')">
+        Crossy Road
+    </button>
+    <button class="button" onclick="openGame('https://bloxd.io')">
+        <img alt="favicon" class="favicon" src="icons/bloxd.io_favicon.png"/>
+        Bloxd.io
+    </button>
+    <button class="button" onclick="openGame('https://cuberealm.io/')">
+        <img alt="favicon" class="favicon" src="icons/cuberealm.io__favicon.png"/>
+        CubeRealm.io
+    </button>
+    <button class="button" onclick="openGame('https://aimtrainer.io/')">
+        <img alt="favicon" class="favicon" src="icons/aimtrainer.io__favicon.ico"/>
+        Aim Trainer
+    </button>
+    <button class="button" onclick="openGame('https://www.gamearter.com/game/scrap-metal/')">
+        Scrap Metal 1
+    </button>
+    <button class="button" onclick="openGame('https://www.gamearter.com/game/scrap-metal-2/')">
+        Scrap Metal 2
+    </button>
+    <button class="button" onclick="openGame('https://adfree3kh0.github.io/projects/scrapmetal/index.html')">
+        Scrap Metal 3
+    </button>
+    <button class="button" onclick="openGame('https://www.gamearter.com/game/scrap-metal-4/')">
+        Scrap Metal 4
+    </button>
+    <button class="button" onclick="openGame('https://www.gamearter.com/game/scrap-metal-5/')">
+        Scrap Metal 5
+    </button>
+    <button class="button" onclick="openGame('https://www.gamearter.com/game/scrap-metal-6/')">
+        Scrap Metal 6
+    </button>
+    <button class="button" onclick="openGame('https://www.gamearter.com/game/games')">
+        <img alt="favicon" class="favicon" src="icons/www.gamearter.com_game_games_favicon.png"/>
+        GameArter
+    </button>
+    <button class="button" onclick="openGame('https://unblocked-games.s3.amazonaws.com/index.html')">
+        FreezeNova
+    </button>
+    <button class="button" onclick="openGame('https://selenite.cc/semag/gdlite/index.html')">
+        Geometry Dash Lite
+    </button>
+    <button class="button" onclick="openGame('https://selenite.cc/semag/fnaf2/index.html')">
+        FNAF 2
+    </button>
+    <button class="button" onclick="openGame('https://selenite.cc/semag/fnaf3/index.html')">
+        FNAF 3
+    </button>
+    <button class="button" onclick="openGame('https://selenite.cc/semag/fnaf4/index.html')">
+        FNAF 4
+    </button>
+    <button class="button" onclick="openGame('https://selenite.cc/semag/eaglercraft/index.html')">
+        Selenite Minecraft
+    </button>
+    <button class="button" onclick="openGame('https://littlebigsnake.com')">
+        <img alt="favicon" class="favicon" src="icons/littlebigsnake.com_favicon.png"/>
+        LittleBigSnake
+    </button>
+    <button class="button" onclick="openGame('https://surviv.io')">
+        <img alt="favicon" class="favicon" src="icons/surviv.io_favicon.png"/>
+        Surviv.io
+    </button>
+    <button class="button" onclick="openGame('https://unblocked-games.s3.amazonaws.com/spacebar-clicker.html')">
+        Spacebar Clicker
+    </button>
+    <button class="button" onclick="openGame('https://deadshot.io')">
+        <img alt="favicon" class="favicon" src="icons/deadshot.io_favicon.png"/>
+        Deadshot.io
+    </button>
+    <button class="button" onclick="openGame('https://elucidation.github.io/ClickerJs/')">
+        Clicker
+    </button>
+    <button class="button" onclick="openGame('https://smashkarts.io')">
+        <img alt="favicon" class="favicon" src="icons/smashkarts.io_favicon.png"/>
+        Smashkarts.io
+    </button>
+    <button class="button" onclick="openGame('https://www.yurk.com/games/pixelforce/')">
+        <img alt="favicon" class="favicon" src="icons/www.yurk.com_games_pixelforce__favicon.ico"/>
+        Pixel Force
+    </button>
+    <button class="button" onclick="openGame('https://www.yurk.com/games/happyglass/')">
+        Happy Glass
+    </button>
+    <button class="button" onclick="openGame('https://www.yurk.com/games/stickrunning/')">
+        <img alt="favicon" class="favicon" src="icons/www.yurk.com_games_stickrunning__favicon.png"/>
+        Stick Running
+    </button>
+    <button class="button" onclick="openGame('https://www.yurk.com/games/happyfilledglass/')">
+        <img alt="favicon" class="favicon" src="icons/www.yurk.com_games_happyfilledglass__favicon.png"/>
+        Happy Filled Glass
+    </button>
+    <button class="button" onclick="openGame('https://d3rtzzzsiu7gdr.cloudfront.net/settings.html')">
+        Hypackel Games
+    </button>
+    <button class="button" onclick="openGame('https://d21u3ic0kp9e91.cloudfront.net/elasticman/0/index.html')">
+        Elastic Man
+    </button>
+    <button class="button" onclick="openGame('https://ubg44.github.io/TunnelRush/')">
+        <img alt="favicon" class="favicon" src="icons/ubg44.github.io_TunnelRush__favicon.ico"/>
+        Tunnel Rush
+    </button>
+    <button class="button" onclick="openGame('https://d3rtzzzsiu7gdr.cloudfront.net/files/cookieclicker/game/index.html')">
+        Cookie Clicker 2024 (Click link)
+    </button>
+    <button class="button" onclick="openGame('https://d3rtzzzsiu7gdr.cloudfront.net/gameplayer/index.html?Interactive%20Buddy')">
+        Interactive Buddy
+    </button>
+    <button class="button" onclick="openGame('https://d3rtzzzsiu7gdr.cloudfront.net/files/baldisbasics/index.html')">
+        Baldis Basics
+    </button>
+    <button class="button" onclick="openGame('https://d3rtzzzsiu7gdr.cloudfront.net/files/minecraft-classic/index.html')">
+        Minecraft Classic
+    </button>
+    <button class="button" onclick="openGame('https://d3rtzzzsiu7gdr.cloudfront.net/files/AngryBirdsWebGL/index.html')">
+        Angry Birds
+    </button>
+    <button class="button" onclick="openGame('https://d3rtzzzsiu7gdr.cloudfront.net/gameplayer/index.html?Eaglercraft%20(MC)#')">
+        Minecraft 1.8
+    </button>
+    <button class="button" onclick="openGame('https://d3rtzzzsiu7gdr.cloudfront.net/files/projects/precision-client/index.html')">
+        Precision Client Eagler
+    </button>
+    <button class="button" onclick="openGame('https://2048game.com/')">
+        <img alt="favicon" class="favicon" src="icons/2048game.com__favicon.ico"/>
+        2048
+    </button>
+    <button class="button" onclick="openGame('https://d3rtzzzsiu7gdr.cloudfront.net/files/flappybird/index.html')">
+        Flappy Bird
+    </button>
+    <button class="button" onclick="openGame('https://d3rtzzzsiu7gdr.cloudfront.net/gameplayer/index.html?1v1.LOL%20[Needs%20Internet]')">
+        1v1.lol
+    </button>
+    <button class="button" onclick="openGame('https://win11.blueedge.me')">
+        <img alt="favicon" class="favicon" src="icons/win11.blueedge.me_favicon.ico"/>
+        Win11 in React
+    </button>
+    <button class="button" onclick="openGame('https://hypackel.com')">
+        <img alt="favicon" class="favicon" src="icons/hypackel.com_favicon.png"/>
+        Hypackel 2
+    </button>
+    <button class="button" onclick="openGame('https://hypackel.github.io')">
+        <img alt="favicon" class="favicon" src="icons/hypackel.github.io_favicon.ico"/>
+        Hypackel 3
+    </button>
+    <button class="button" onclick="openGame('https://1v1.lol')">
+        <img alt="favicon" class="favicon" src="icons/1v1.lol_favicon.png"/>
+        1v1.lol Fortnite - Play at home
+    </button>
+    <button class="button" onclick="openGame('https://archive.org/details/tiq2_swf')">
+        Impossible Quiz 2
+    </button>
+    <button class="button" onclick="openGame('https://web.archive.org/web/20241112154118/now.gg')">
+        <img alt="favicon" class="favicon" src="icons/web.archive.org_web_20241112154118_now.gg_favicon.ico"/>
+        Now.gg Method 2
+    </button>
+    <button class="button" onclick="openGame('https://web.archive.org')">
+        <img alt="favicon" class="favicon" src="icons/web.archive.org_web_20241112154118_now.gg_favicon.ico"/>
+        Web Archive
+    </button>
+    <button class="button" onclick="openGame('https://barneycompiler.github.io/AstraClientEagler/javascript')">
+        Astra Client Eagler
+    </button>
+    <button class="button" onclick="openGame('https://tetris.com/play-tetris')">
+        <img alt="favicon" class="favicon" src="icons/tetris.com_play-tetris_favicon.png"/>
+        Tetris
+    </button>
+    <button class="button" onclick="openGame('https://lingojam.com/GlitchTextGenerator')">
+        Glitch Text Generator
+    </button>
+    </button>
+    <button class="button" onclick="openGame('https://www.yurk.com/games/stickmanswing')">
+        <img alt="favicon" class="favicon" src="icons/www.yurk.com_games_stickmanswing_favicon.ico"/>
+        Stickman Swing
+    </button>
+    <button class="button" onclick="openGame('https://elgoog.im')">
+        <img alt="favicon" class="favicon" src="icons/elgoog.im_favicon.png"/>
+        Google Easter Egg Games
+    </button>
+    <button class="button" onclick="openGame('https://duckmath.org/index.html')">
+        Duck Math Games
+    </button>
+    <button class="button" onclick="openGame('https://www.chilltrax.com/')">
+        <img alt="favicon" class="favicon" src="icons/www.chilltrax.com__favicon.png"/>
+        Chill Radio
+    </button>
+    <button class="button" onclick="openGame('https://beinternetawesome.withgoogle.com/en_us/interland/landing/tower-of-treasure')">
+        <img alt="favicon" class="favicon" src="icons/beinternetawesome.withgoogle.com_en_us_interland_landing_tower-of-treasure_favicon.png"/>
+        Tower of Treasure
+    </button>
+    <button class="button" onclick="openGame('https://lingojam.com/FancyTextGenerator')">
+        Fancy Text Generator
+    </button>
+    <button class="button" onclick="openGame('https://yurk.com')">
+        <img alt="favicon" class="favicon" src="icons/yurk.com_favicon.png"/>
+        Yurk.com
+    </button>
+    <button class="button" onclick="openGame('https://html.cafe/xf91164ad')">
+        <img alt="favicon" class="favicon" src="icons/html.cafe_xf91164ad_favicon.png"/>
+        Australian Man Website
+    </button>
+    <button class="button" onclick="openGame('https://html.cafe/x4922b615')">
+        SigmaFart
+    </button>
+    <button class="button" onclick="openGame('https://d3rtzzzsiu7gdr.cloudfront.net/play/index.html?Bottle%20Flip%203D')">
+        Bottle Flip 3D
+    </button>
+    <button class="button" onclick="openGame('https://friv.com')">
+        <img alt="favicon" class="favicon" src="icons/friv.com_favicon.png"/>
+        Friv.com
+    </button>
+    <button class="button" onclick="openGame('https://gulper.io/')">
+        <img alt="favicon" class="favicon" src="icons/gulper.io__favicon.png"/>
+        Slither.io Ripoff
+    </button>
+    <button class="button" onclick="openGame('https://infinite-craft.com/infinite-craft/')">
+        Infinite Craft
+    </button>
+    <button class="button" onclick="openGame('https://igroutka.ru/loader/game/26471/')">
+        Baldis Basics Method 2
+    </button>
+    <button class="button" onclick="openGame('https://gnhustgames.github.io/wbwwb/')">
+        We Become what we Behold
+    </button>
+    <button class="button" onclick="openGame('https://servers.eaglercraft.com/')">
+        <img alt="favicon" class="favicon" src="icons/servers.eaglercraft.com__favicon.ico"/>
+        Eaglercraft Servers
+    </button>
+    <button class="button" onclick="openGame('https://htmlxm.github.io/h7/dinosaur-game/')">
+        Chrome Dino
+    </button>
+    <button class="button" onclick="openGame('https://turbowarp.org/389464290/embed?autoplay&addons=remove-curved-stage-border,pause,gamepad')">
+        <img alt="favicon" class="favicon" src="icons/turbowarp.org_389464290_embed?autoplay&addons=remove-curved-stage-border,pause,gamepad_favicon.ico"/>
+        Getting over it (Scratch)
+    </button>
+    <button class="button" onclick="openGame('https://player.work/1v1lol/index.html')">
+        1v1.lol Method 3
+    </button>
+    <button class="button" onclick="openGame('https://html.cafe/gallery')">
+        HTML.cafe Gallery
+    </button>
+    <button class="button" onclick="openGame('https://eaglercraftx1-8.github.io/')">
+        <img alt="favicon" class="favicon" src="icons/eaglercraftx1-8.github.io__favicon.png"/>
+        Eaglercraft Clients
+    </button>
+    <button class="button" onclick="openGame('http://slither.com/io')">
+        <img alt="favicon" class="favicon" src="icons/slither.com_io_favicon.png"/>
+        Slither.io
+    </button>
+    <button class="button" onclick="openGame('https://easyfun.gg')">
+        <img alt="favicon" class="favicon" src="icons/easyfun.gg_favicon.ico"/>
+        Easyfun.gg
+    </button>
+    <button class="button" onclick="openGame('https://mcraft.fun')">
+        <img alt="favicon" class="favicon" src="icons/mcraft.fun_favicon.png"/>
+        Minecraft Java Edition
+    </button>
+    <button class="button" onclick="openGame('https://html.cafe/xb2c91b5a')">
+        Mood Tracker
+    </button>
+    <button class="button" onclick="openGame('https://html.cafe/x63aefeaa')">
+        Guess The Number Game
+    </button>
+    <button class="button" onclick="openGame('https://spacenerd24.github.io/Online-HTML-Viewer/')">
+        HTML Editor
+    </button>
+    <button class="button" onclick="openGame('https://selenite-copy.pages.dev')">
+        <img alt="favicon" class="favicon" src="icons/selenite-copy.pages.dev_favicon.ico"/>
+        Selenite Copy
+    </button>
     </div>
     <p class="no-results" id="noResults">No results found</p>
     <div class="text-bar" id="textBar"></div>
@@ -1812,7 +1798,7 @@
     </div>
 
     <script>
-        const statements = [
+    const statements = [
         "Losers never win, if they keep losing.",
     "Sometimes it's better to be on the good side, not the great side",
     "You like jazz?",
