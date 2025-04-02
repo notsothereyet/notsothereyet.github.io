@@ -243,16 +243,17 @@
 
         .popup {
             position: fixed;
-            top: 80px;
-            right: -300px;
+            top: 60px; /* Adjusted to be just below the settings bar */
+            right: -300px; /* Start off-screen */
             background: rgba(255, 255, 255, 0.9);
             color: #228b22;
-            padding: 15px 25px;
+            padding: 10px 20px; /* Reduced padding for a sleeker look */
             border-radius: 8px;
             border: 2px solid #ffd700;
-            font-size: 1rem;
+            font-size: 0.9rem; /* Slightly smaller font */
             z-index: 3;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            max-width: 300px; /* Limit width to prevent overlap */
         }
 
         body.dark-mode .popup, body.blue-mode .popup, body.ultraviolet-mode .popup {
@@ -261,7 +262,7 @@
         }
 
         .popup.show {
-            right: 20px;
+            right: 20px; /* Slide to the right edge */
             animation: slideInRight 0.5s ease forwards;
         }
 
@@ -1719,7 +1720,7 @@
     <button class="button" onclick="openGame('https://selenite-copy.pages.dev')">
         <img alt="favicon" class="favicon" src="icons/selenite-copy.pages.dev_favicon.ico"/>
         Selenite Copy
-    </button>
+    </button>        </div>
     </div>
     <p class="no-results" id="noResults">No results found</p>
     <div class="text-bar" id="textBar"></div>
@@ -1798,30 +1799,30 @@
     </div>
 
     <script>
-    const statements = [
-        "Losers never win, if they keep losing.",
-    "Sometimes it's better to be on the good side, not the great side",
-    "You like jazz?",
-    "One time this guy walked up to me and said...",
-    "Unlimited Games and Proxies here at your service o7",
-    "Will we ever see the end of the universe?",
-    "Hate from Poland",
-    "Smooth Jazz is like hard rock, except it isn't",
-    "Rocks are awesome",
-    "Did you know that over 1 mosquito gets killed each year?",
-    "10+10-10-10-10-10+10+10=0",
-    "Do your homework",
-    "Only 1̶9̶.̶9̶5̶  FREE!",
-    "If you paid for this, I'm sorry",
-    "Only real ones know about the original HTML code",
-    "I can name 50 animals on the top of my head. Ready?",
-    "'Best site out there' - Nobody",
-    "We put the SCOO from SCHOOL in SCOOby Doo",
-    "Sometimes people say 10+10=20, but it actually is...",
-    "Congrats, you got this message, you get nothing :O",
-    "Sometimes I wonder how the brain operates",
-    "Not one speling eror in the site",
-    "Okay who said a link was broken?!"
+        const statements = [
+            "Losers never win, if they keep losing.",
+            "Sometimes it's better to be on the good side, not the great side",
+            "You like jazz?",
+            "One time this guy walked up to me and said...",
+            "Unlimited Games and Proxies here at your service o7",
+            "Will we ever see the end of the universe?",
+            "Hate from Poland",
+            "Smooth Jazz is like hard rock, except it isn't",
+            "Rocks are awesome",
+            "Did you know that over 1 mosquito gets killed each year?",
+            "10+10-10-10-10-10+10+10=0",
+            "Do your homework",
+            "Only 1̶9̶.̶9̶5̶  FREE!",
+            "If you paid for this, I'm sorry",
+            "Only real ones know about the original HTML code",
+            "I can name 50 animals on the top of my head. Ready?",
+            "'Best site out there' - Nobody",
+            "We put the SCOO from SCHOOL in SCOOby Doo",
+            "Sometimes people say 10+10=20, but it actually is...",
+            "Congrats, you got this message, you get nothing :O",
+            "Sometimes I wonder how the brain operates",
+            "Not one speling eror in the site",
+            "Okay who said a link was broken?!"
         ];
 
         let userUsername = localStorage.getItem("userUsername");
@@ -1901,7 +1902,7 @@
             setTimeout(() => {
                 settingsMenu.classList.add("show");
                 showTab('appearance');
-                document.getElementById('panicKeyInput').value = panicKey;
+                document.getElementById('panicKeyInput|            document.getElementById('panicKeyInput').value = panicKey;
             }, 100);
         }
 
