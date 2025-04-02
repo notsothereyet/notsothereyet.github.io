@@ -4,6 +4,11 @@
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Shep</title>
+    <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="robots" content="noindex, nofollow">
     <link href="sheep-favicon.ico" id="favicon" rel="icon" type="image/png"/>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet"/>
@@ -1989,56 +1994,56 @@ function enableAboutBlank() {
         openInAboutBlank();
     }, 1000);
 }
-
-function openInAboutBlank() {
-    const currentUrl = window.location.href;
-    const aboutBlankWindow = window.open('about:blank', '_blank');
-    if (aboutBlankWindow) {
-        const doc = aboutBlankWindow.document;
-        const cloakedTitle = localStorage.getItem('cloakTitle') || 'Shep Games';
-        const cloakedFavicon = localStorage.getItem('cloakFavicon') || 'sheep-favicon.ico';
-
-        console.log('Opening about:blank - Title:', cloakedTitle, 'Favicon:', cloakedFavicon); // Debug
-
-        doc.write(`
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <title>${cloakedTitle}</title>
-                <link rel="icon" type="image/png" href="${cloakedFavicon}">
-                <script>
-                    function enforceCloaking() {
-                        document.title = "${cloakedTitle}";
-                        let link = document.querySelector("link[rel='icon']");
-                        if (!link) {
-                            link = document.createElement('link');
-                            link.rel = 'icon';
-                            link.type = 'image/png';
-                            document.head.appendChild(link);
-                        }
-                        link.href = "${cloakedFavicon}";
-                        console.log('Enforced cloaking in about:blank - Title:', "${cloakedTitle}", 'Favicon:', "${cloakedFavicon}");
-                    }
-                    window.onload = enforceCloaking;
-                </script>
-            </head>
-            <body style="margin:0;padding:0;overflow:hidden;">
-                <iframe src="${currentUrl}" style="width:100%;height:100vh;border:none;" onload="enforceCloaking()"></iframe>
-            </body>
-            </html>
-        `);
-        doc.close();
-        
-        // Redirect the original tab
-        window.location.href = 'about:blank';
-    } else {
-        console.error('Failed to open about:blank window. Popup blocker may be active.');
-        const popup = document.getElementById('greetingPopup');
-        popup.textContent = 'Failed to open about:blank. Check popup blocker.';
-        popup.classList.add('show');
-        setTimeout(() => popup.classList.remove('show'), 3000);
-    }
+function sanitizeInput(input) {
+    return input.replace(/[<>&"']/g, '');
 }
+function openInAboutBlank() {
+        try {
+            const currentUrl = encodeURI(window.location.href);
+            const aboutBlankWindow = window.open('about:blank', '_blank');
+            if (!aboutBlankWindow) throw new Error('Popup blocked');
+            
+            const doc = aboutBlankWindow.document;
+            const cloakedTitle = sanitizeInput(localStorage.getItem('cloakTitle') || 'Shep Games');
+            const cloakedFavicon = sanitizeInput(localStorage.getItem('cloakFavicon') || 'sheep-favicon.ico');
+
+            doc.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>${cloakedTitle}</title>
+                    <link rel="icon" type="image/png" href="${cloakedFavicon}">
+                    <style>body{margin:0;overflow:hidden;}</style>
+                </head>
+                <body>
+                    <iframe src="${currentUrl}" style="width:100%;height:100vh;border:none;"></iframe>
+                </body>
+                </html>
+            `);
+            doc.close();
+            window.location.href = 'about:blank';
+        } catch (error) {
+            console.error('About:blank error:', error);
+            showPopup('Failed to open in about:blank. Check popup blocker.', 3000);
+        }
+    }
+    let searchTimeout;
+    function searchGames() {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            const searchTerm = sanitizeInput(document.getElementById('search').value.toLowerCase());
+            const buttons = document.querySelectorAll('#gamebuttons .button');
+            let found = false;
+
+            buttons.forEach(button => {
+                const gameName = button.textContent.toLowerCase().trim();
+                button.style.display = gameName.includes(searchTerm) ? 'inline-flex' : 'none';
+                if (gameName.includes(searchTerm)) found = true;
+            });
+
+            document.getElementById('noResults').style.display = found ? 'none' : 'block';
+        }, 300);
+    }
         function openGame(url) {
             const mainContent = document.getElementById('mainContent');
             originalContent = mainContent.innerHTML;
@@ -2076,6 +2081,12 @@ function openInAboutBlank() {
 
             document.getElementById('noResults').style.display = found ? 'none' : 'block';
         }
+        function showPopup(message, duration) {
+        const popup = document.getElementById('greetingPopup');
+        popup.textContent = sanitizeInput(message);
+        popup.classList.add('show');
+        setTimeout(() => popup.classList.remove('show'), duration);
+    }
 
         function updateGameCount() {
             const gameButtons = document.querySelectorAll('#gamebuttons .button');
@@ -2162,28 +2173,35 @@ function openInAboutBlank() {
             }
         });
 
-   window.addEventListener('load', () => {
-    const savedMode = localStorage.getItem('appearanceMode') || 'light';
-    const savedFont = localStorage.getItem('fontFamily') || 'Poppins';
-    const savedPanicKey = localStorage.getItem('panicKey') || ']';
-    const savedPanicUrl = localStorage.getItem('panicUrl') || 'https://classroom.google.com';
-    const savedTitle = localStorage.getItem("cloakTitle");
-    const savedFavicon = localStorage.getItem("cloakFavicon");
-    useAboutBlank = localStorage.getItem('useAboutBlank') === 'true';
+        window.addEventListener('load', () => {
+        try {
+            const savedMode = localStorage.getItem('appearanceMode') || 'light';
+            const savedFont = localStorage.getItem('fontFamily') || 'Poppins';
+            const savedPanicKey = localStorage.getItem('panicKey') || ']';
+            const savedPanicUrl = localStorage.getItem('panicUrl') || 'https://classroom.google.com';
+            useAboutBlank = localStorage.getItem('useAboutBlank') === 'true';
 
-    document.body.classList.add(`${savedMode}-mode`);
-    document.body.style.fontFamily = `'${savedFont}', sans-serif`;
-    document.getElementById('fontSelect').value = savedFont;
-    document.getElementById('aboutBlankToggle').checked = useAboutBlank;
-    if (savedTitle && savedFavicon) {
-        document.title = savedTitle;
-        document.getElementById("favicon").href = savedFavicon;
-    }
-    if (userUsername) {
-        mainContent.style.display = "block";
-    }
-    console.log('Page loaded - Cloak Title:', savedTitle, 'Cloak Favicon:', savedFavicon); // Debug
-});
+            document.body.classList.add(`${savedMode}-mode`);
+            document.body.style.fontFamily = `'${sanitizeInput(savedFont)}', sans-serif`;
+            document.getElementById('fontSelect').value = savedFont;
+            document.getElementById('aboutBlankToggle').checked = useAboutBlank;
+
+            const savedTitle = sanitizeInput(localStorage.getItem('cloakTitle') || 'Shep Games');
+            const savedFavicon = sanitizeInput(localStorage.getItem('cloakFavicon') || 'sheep-favicon.ico');
+            document.title = savedTitle;
+            document.getElementById('favicon').href = savedFavicon;
+
+            if (userUsername) {
+                showMainContent();
+            }
+
+            if (useAboutBlank) {
+                openInAboutBlank();
+            }
+        } catch (error) {
+            console.error('Load error:', error);
+        }
+    });
     </script>
 </body>
 </html>
