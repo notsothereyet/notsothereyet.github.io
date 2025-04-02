@@ -1977,7 +1977,7 @@
     setTimeout(() => popup.classList.remove('show'), 3000);
 }
 
-        function enableAboutBlank() {
+function enableAboutBlank() {
     useAboutBlank = true;
     localStorage.setItem('useAboutBlank', useAboutBlank);
     document.getElementById('aboutBlankToggle').checked = true;
@@ -1995,10 +1995,15 @@ function openInAboutBlank() {
     const aboutBlankWindow = window.open('about:blank', '_blank');
     if (aboutBlankWindow) {
         const doc = aboutBlankWindow.document;
-        // Get the cloaked title and favicon from localStorage, or use defaults
+        // Retrieve cloaked settings with fallbacks
         const cloakedTitle = localStorage.getItem('cloakTitle') || 'Shep Games';
-        const cloakedFavicon = localStorage.getItem('cloakFavicon') || 'sheep-favicon.ico';
-        
+        let cloakedFavicon = localStorage.getItem('cloakFavicon') || 'sheep-favicon.ico';
+
+        // Log for debugging
+        console.log('Cloaked Title:', cloakedTitle);
+        console.log('Cloaked Favicon:', cloakedFavicon);
+
+        // Write the HTML with dynamic title and favicon
         doc.write(`
             <!DOCTYPE html>
             <html>
@@ -2012,7 +2017,11 @@ function openInAboutBlank() {
             </html>
         `);
         doc.close();
-        window.location.href = 'about:blank'; // Redirect the current tab
+
+        // Redirect the original tab
+        window.location.href = 'about:blank';
+    } else {
+        console.error('Failed to open about:blank window. Check popup blocker.');
     }
 }
         function openGame(url) {
@@ -2116,14 +2125,15 @@ function openInAboutBlank() {
         }
 
         function setCloak(title, faviconPath) {
-            document.title = title;
-            document.getElementById("favicon").href = faviconPath;
-            localStorage.setItem("cloakTitle", title);
-            localStorage.setItem("cloakFavicon", faviconPath);
-            popup.textContent = `Site cloaked as: ${title}`;
-            popup.classList.add('show');
-            setTimeout(() => popup.classList.remove('show'), 3000);
-        }
+    document.title = title;
+    document.getElementById("favicon").href = faviconPath;
+    localStorage.setItem("cloakTitle", title);
+    localStorage.setItem("cloakFavicon", faviconPath); // Store the exact path
+    const popup = document.getElementById('greetingPopup');
+    popup.textContent = `Site cloaked as: ${title}`;
+    popup.classList.add('show');
+    setTimeout(() => popup.classList.remove('show'), 3000);
+}
 
         document.getElementById('panicKeyInput').addEventListener('input', function(e) {
             panicKey = e.target.value.toLowerCase();
