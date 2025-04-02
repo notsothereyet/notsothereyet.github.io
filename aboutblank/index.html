@@ -1990,15 +1990,22 @@
     }, 1000);
 }
 
-        function openInAboutBlank() {
+function openInAboutBlank() {
     const currentUrl = window.location.href;
     const aboutBlankWindow = window.open('about:blank', '_blank');
     if (aboutBlankWindow) {
         const doc = aboutBlankWindow.document;
+        // Get the cloaked title and favicon from localStorage, or use defaults
+        const cloakedTitle = localStorage.getItem('cloakTitle') || 'Shep Games';
+        const cloakedFavicon = localStorage.getItem('cloakFavicon') || 'sheep-favicon.ico';
+        
         doc.write(`
             <!DOCTYPE html>
             <html>
-            <head><title>Shep Games</title></head>
+            <head>
+                <title>${cloakedTitle}</title>
+                <link rel="icon" type="image/png" href="${cloakedFavicon}">
+            </head>
             <body style="margin:0;padding:0;overflow:hidden;">
                 <iframe src="${currentUrl}" style="width:100%;height:100vh;border:none;"></iframe>
             </body>
@@ -2008,7 +2015,6 @@
         window.location.href = 'about:blank'; // Redirect the current tab
     }
 }
-
         function openGame(url) {
             const mainContent = document.getElementById('mainContent');
             originalContent = mainContent.innerHTML;
