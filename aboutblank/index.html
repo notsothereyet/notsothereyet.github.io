@@ -1836,8 +1836,7 @@
         let panicKey = ']';
         let panicUrl = 'https://classroom.google.com';
         let originalContent = '';
-        let useAboutBlank = localStorage.getItem('useAboutBlank') === 'true';
-
+        let useAboutBlank = localStorage.getItem('useAboutBlank') === 'true'; // Add this line here
         function createClouds() {
             const cloudCount = 10;
             for (let i = 0; i < cloudCount; i++) {
@@ -1970,43 +1969,45 @@
         }
 
         function toggleAboutBlank() {
-            useAboutBlank = document.getElementById('aboutBlankToggle').checked;
-            localStorage.setItem('useAboutBlank', useAboutBlank);
-            popup.textContent = `Site will ${useAboutBlank ? 'open in about:blank on next load' : 'open normally'}`;
-            popup.classList.add('show');
-            setTimeout(() => popup.classList.remove('show'), 3000);
-        }
+    useAboutBlank = document.getElementById('aboutBlankToggle').checked;
+    localStorage.setItem('useAboutBlank', useAboutBlank);
+    const popup = document.getElementById('greetingPopup');
+    popup.textContent = `Site will ${useAboutBlank ? 'open in about:blank on next load' : 'open normally'}`;
+    popup.classList.add('show');
+    setTimeout(() => popup.classList.remove('show'), 3000);
+}
 
         function enableAboutBlank() {
-            useAboutBlank = true;
-            localStorage.setItem('useAboutBlank', useAboutBlank);
-            document.getElementById('aboutBlankToggle').checked = true;
-            popup.textContent = 'Opening in about:blank...';
-            popup.classList.add('show');
-            setTimeout(() => {
-                popup.classList.remove('show');
-                openInAboutBlank();
-            }, 1000);
-        }
+    useAboutBlank = true;
+    localStorage.setItem('useAboutBlank', useAboutBlank);
+    document.getElementById('aboutBlankToggle').checked = true;
+    const popup = document.getElementById('greetingPopup');
+    popup.textContent = 'Opening in about:blank...';
+    popup.classList.add('show');
+    setTimeout(() => {
+        popup.classList.remove('show');
+        openInAboutBlank();
+    }, 1000);
+}
 
         function openInAboutBlank() {
-            const currentUrl = window.location.href;
-            const aboutBlankWindow = window.open('about:blank', '_blank');
-            if (aboutBlankWindow) {
-                const doc = aboutBlankWindow.document;
-                doc.write(`
-                    <!DOCTYPE html>
-                    <html>
-                    <head><title>Shep Games</title></head>
-                    <body style="margin:0;padding:0;overflow:hidden;">
-                        <iframe src="${currentUrl}" style="width:100%;height:100vh;border:none;"></iframe>
-                    </body>
-                    </html>
-                `);
-                doc.close();
-                window.location.href = 'about:blank';
-            }
-        }
+    const currentUrl = window.location.href;
+    const aboutBlankWindow = window.open('about:blank', '_blank');
+    if (aboutBlankWindow) {
+        const doc = aboutBlankWindow.document;
+        doc.write(`
+            <!DOCTYPE html>
+            <html>
+            <head><title>Shep Games</title></head>
+            <body style="margin:0;padding:0;overflow:hidden;">
+                <iframe src="${currentUrl}" style="width:100%;height:100vh;border:none;"></iframe>
+            </body>
+            </html>
+        `);
+        doc.close();
+        window.location.href = 'about:blank'; // Redirect the current tab
+    }
+}
 
         function openGame(url) {
             const mainContent = document.getElementById('mainContent');
@@ -2130,28 +2131,33 @@
         });
 
         window.addEventListener('load', () => {
-            const savedMode = localStorage.getItem('appearanceMode') || 'light';
-            const savedFont = localStorage.getItem('fontFamily') || 'Poppins';
-            const savedPanicKey = localStorage.getItem('panicKey') || ']';
-            const savedPanicUrl = localStorage.getItem('panicUrl') || 'https://classroom.google.com';
-            const savedTitle = localStorage.getItem("cloakTitle");
-            const savedFavicon = localStorage.getItem("cloakFavicon");
-            useAboutBlank = localStorage.getItem('useAboutBlank') === 'true';
+    const savedMode = localStorage.getItem('appearanceMode') || 'light';
+    const savedFont = localStorage.getItem('fontFamily') || 'Poppins';
+    const savedPanicKey = localStorage.getItem('panicKey') || ']';
+    const savedPanicUrl = localStorage.getItem('panicUrl') || 'https://classroom.google.com';
+    const savedTitle = localStorage.getItem("cloakTitle");
+    const savedFavicon = localStorage.getItem("cloakFavicon");
+    useAboutBlank = localStorage.getItem('useAboutBlank') === 'true';
 
-            document.body.classList.add(`${savedMode}-mode`);
-            document.body.style.fontFamily = `'${savedFont}', sans-serif`;
-            document.getElementById('fontSelect').value = savedFont;
-            document.getElementById('aboutBlankToggle').checked = useAboutBlank;
-            panicKey = savedPanicKey;
-            panicUrl = savedPanicUrl;
-            if (savedTitle && savedFavicon) {
-                document.title = savedTitle;
-                document.getElementById("favicon").href = savedFavicon;
-            }
-            if (userUsername) {
-                mainContent.style.display = "block";
-            }
-        });
+    document.body.classList.add(`${savedMode}-mode`);
+    document.body.style.fontFamily = `'${savedFont}', sans-serif`;
+    document.getElementById('fontSelect').value = savedFont;
+    document.getElementById('aboutBlankToggle').checked = useAboutBlank; // Set slider state
+    panicKey = savedPanicKey;
+    panicUrl = savedPanicUrl;
+    if (savedTitle && savedFavicon) {
+        document.title = savedTitle;
+        document.getElementById("favicon").href = savedFavicon;
+    }
+    if (userUsername) {
+        mainContent.style.display = "block";
+    }
+
+    // If about:blank is enabled, apply it on load (optional behavior)
+    if (useAboutBlank) {
+        openInAboutBlank();
+    }
+});
     </script>
 </body>
 </html>
